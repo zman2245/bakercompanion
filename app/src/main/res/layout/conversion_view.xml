@@ -25,7 +25,8 @@
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_below="@id/from_value"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            >
 
         </Spinner>
     </RelativeLayout>
@@ -37,6 +38,14 @@
         android:layout_height="match_parent"
         android:background="#008000">
 
+        <Spinner
+            android:id="@+id/ingredient_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            >
+
+        </Spinner>
     </RelativeLayout>
 
     <RelativeLayout

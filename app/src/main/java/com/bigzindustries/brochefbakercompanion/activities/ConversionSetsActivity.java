@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
@@ -25,7 +24,7 @@ public class ConversionSetsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_conversion_sets);
 
         conversionSetsList = (ListView)findViewById(R.id.conversion_sets_list);
         addButton = (FloatingActionButton) findViewById(R.id.add_button);
@@ -44,6 +43,6 @@ public class ConversionSetsActivity extends AppCompatActivity {
     }
 
     private void handleAddButtonClick() {
-        // TBD: Launch activity for adding!
+        startActivity(new Intent(this, ConversionsActivity.class));
     }
 }

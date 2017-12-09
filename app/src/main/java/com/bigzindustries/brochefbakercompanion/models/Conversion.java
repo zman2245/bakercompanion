@@ -1,31 +1,45 @@
 package com.bigzindustries.brochefbakercompanion.models;
 
+import com.bigzindustries.brochefbakercompanion.unitdata.Ingredients;
+import com.bigzindustries.brochefbakercompanion.unitdata.Units;
+
 public class Conversion {
-    private String fromUnit;
-    private String toUnit;
+    private Ingredients ingredient;
+    private Units fromUnit;
+    private Units toUnit;
     private float fromValue;
     private float toValue;
 
-    public Conversion(String fromUnit, String toUnit, float fromValue, float toValue) {
+    public Conversion(Ingredients ingredient, Units fromUnit, Units toUnit,
+                      float fromValue, float toValue) {
+        this.ingredient = ingredient;
         this.fromUnit = fromUnit;
         this.toUnit = toUnit;
         this.fromValue = fromValue;
         this.toValue = toValue;
     }
 
-    public String getFromUnit() {
+    public Ingredients getIngredient() {
+        return ingredient;
+    }
+
+    public void setIngredient(Ingredients ingredient) {
+        this.ingredient = ingredient;
+    }
+
+    public Units getFromUnit() {
         return fromUnit;
     }
 
-    public void setFromUnit(String fromUnit) {
+    public void setFromUnit(Units fromUnit) {
         this.fromUnit = fromUnit;
     }
 
-    public String getToUnit() {
+    public Units getToUnit() {
         return toUnit;
     }
 
-    public void setToUnit(String toUnit) {
+    public void setToUnit(Units toUnit) {
         this.toUnit = toUnit;
     }
 

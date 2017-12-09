@@ -12,7 +12,7 @@ public enum Ingredients {
     BUTTER("Butter", 1.043158009);
 
     public String name;
-    public double massToVolumeFactor; // in common units
+    public double massToVolumeFactor; // gram to milliliter conversion factor
 
     Ingredients(String name, double massToVolumeFactor) {
         this.name = name;
