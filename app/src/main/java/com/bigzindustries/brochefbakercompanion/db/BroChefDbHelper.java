@@ -17,10 +17,12 @@ public class BroChefDbHelper extends SQLiteOpenHelper {
     private static final String SQL_CREATE_CONVERSIONS =
             "CREATE TABLE " + TABLE_NAME_CONVERSIONS + " (" +
                     "_id INTEGER PRIMARY KEY," +
+                    "ingredient TEXT," +
                     "fromUnit TEXT," +
                     "toUnit TEXT," +
                     "fromValue REAL," +
                     "toValue READ," +
+                    "priority INTEGER," +
                     "setId INTEGER)"; // points to ConversionSets but can be 0 for "global" items
 
     private static final String SQL_CREATE_CONVERSION_SETS =
@@ -35,10 +37,7 @@ public class BroChefDbHelper extends SQLiteOpenHelper {
             "DROP TABLE IF EXISTS " + TABLE_NAME_CONVERSION_SETS;
 
     public static Conversion buildConversion(Cursor cursor) {
-        return new Conversion(cursor.getString(cursor.getColumnIndexOrThrow("fromUnit")),
-                                cursor.getString(cursor.getColumnIndexOrThrow("toUnit")),
-                                cursor.getFloat(cursor.getColumnIndexOrThrow("fromValue")),
-                                cursor.getFloat(cursor.getColumnIndexOrThrow("toValue")));
+        return null;
     }
 
     public BroChefDbHelper(Context context) {
