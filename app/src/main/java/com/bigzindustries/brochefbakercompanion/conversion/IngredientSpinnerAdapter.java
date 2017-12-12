@@ -9,9 +9,12 @@ import android.widget.CheckedTextView;
 
 import com.bigzindustries.brochefbakercompanion.unitdata.Ingredients;
 
+import java.util.ArrayList;
+
 public class IngredientSpinnerAdapter extends ArrayAdapter<Ingredients> {
-    public IngredientSpinnerAdapter (Context context) {
-        super(context, 0, Ingredients.values());
+
+    public IngredientSpinnerAdapter (Context context, ArrayList<Ingredients> ingredients) {
+        super(context, 0, ingredients);
     }
 
     @Override

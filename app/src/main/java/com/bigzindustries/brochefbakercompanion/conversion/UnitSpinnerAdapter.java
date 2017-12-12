@@ -9,9 +9,11 @@ import android.widget.CheckedTextView;
 
 import com.bigzindustries.brochefbakercompanion.unitdata.Units;
 
+import java.util.ArrayList;
+
 public class UnitSpinnerAdapter extends ArrayAdapter<Units> {
-    public UnitSpinnerAdapter(Context context) {
-        super(context, 0, Units.values());
+    public UnitSpinnerAdapter(Context context, ArrayList<Units> units) {
+        super(context, 0, units);
     }
 
     @Override
