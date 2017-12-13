@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.bigzindustries.brochefbakercompanion.R;
+import com.bigzindustries.brochefbakercompanion.db.BroChefContentProvider;
 import com.bigzindustries.brochefbakercompanion.db.BroChefDbHelper;
 import com.bigzindustries.brochefbakercompanion.unitdata.Ingredients;
 import com.bigzindustries.brochefbakercompanion.unitdata.Units;
@@ -46,15 +47,16 @@ public class ConversionController {
         toUnit.setAdapter(unitAdapter);
     }
 
-    public void addConversionToDb(Context context, int setId) {
+    public void addConversionToDb(Context context, long setId) {
         new Thread(() -> {
-            BroChefDbHelper dbHelper = new BroChefDbHelper(context);
-            dbHelper.insertConversion(setId,
+            ContentValues values = BroChefDbHelper.getValsForConversionInsert(setId,
                     Double.valueOf(fromVal.getText().toString()),
                     Double.valueOf(toVal.getText().toString()),
                     fromUnit.getSelectedItem().toString(),
                     toUnit.getSelectedItem().toString(),
                     ingredient.getSelectedItem().toString());
+
+            context.getContentResolver().insert(BroChefContentProvider.CONVERSIONS_URI, values);
         }).start();
     }
 

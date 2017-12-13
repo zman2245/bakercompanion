@@ -18,7 +18,7 @@ public class NewConversionDialog extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final int setId = getArguments().getInt("setId");
+        final long setId = getArguments().getLong("setId");
 
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

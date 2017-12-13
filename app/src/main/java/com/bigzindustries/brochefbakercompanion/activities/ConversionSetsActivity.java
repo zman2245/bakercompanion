@@ -3,6 +3,7 @@ package com.bigzindustries.brochefbakercompanion.activities;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
@@ -13,6 +14,7 @@ import android.widget.ListView;
 
 import com.bigzindustries.brochefbakercompanion.R;
 import com.bigzindustries.brochefbakercompanion.adapters.ConversionSetsAdapter;
+import com.bigzindustries.brochefbakercompanion.db.BroChefContentProvider;
 import com.bigzindustries.brochefbakercompanion.db.BroChefDbHelper;
 
 /**
@@ -40,13 +42,13 @@ public class ConversionSetsActivity extends AppCompatActivity
         conversionSetsList.setEmptyView(findViewById(R.id.empty_text));
 
         addButton.setOnClickListener(view -> handleAddButtonClick());
+
+        getSupportLoaderManager().initLoader(1, null, this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        getSupportLoaderManager().initLoader(1, null, this);
     }
 
     private void handleAddButtonClick() {
@@ -56,18 +58,8 @@ public class ConversionSetsActivity extends AppCompatActivity
 
     @Override
     public Loader onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(this, null, null, null, null, null)
-        {
-            @Override
-            public Cursor loadInBackground()
-            {
-                // You better know how to get your database.
-                SQLiteDatabase db = dbHelper.getReadableDatabase();
-                // You can use any query that returns a cursor.
-                return db.rawQuery("SELECT  * FROM " + BroChefDbHelper.TABLE_NAME_CONVERSION_SETS,
-                        null);
-            }
-        };
+        return new CursorLoader(this, BroChefContentProvider.CONVERSION_SETS_URI,
+                null, null, null, null);
     }
 
     @Override

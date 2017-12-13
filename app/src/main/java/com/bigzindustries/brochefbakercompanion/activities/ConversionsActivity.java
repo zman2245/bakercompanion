@@ -1,7 +1,8 @@
 package com.bigzindustries.brochefbakercompanion.activities;
 
+import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
@@ -15,11 +16,12 @@ import android.widget.ListView;
 
 import com.bigzindustries.brochefbakercompanion.R;
 import com.bigzindustries.brochefbakercompanion.adapters.ConversionsAdapter;
+import com.bigzindustries.brochefbakercompanion.db.BroChefContentProvider;
 import com.bigzindustries.brochefbakercompanion.db.BroChefDbHelper;
 import com.bigzindustries.brochefbakercompanion.dialogs.NewConversionDialog;
 
 public class ConversionsActivity extends AppCompatActivity
-        implements LoaderManager.LoaderCallbacks<Cursor>{
+        implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final String NEW_CONVERSION_DIALOG_TAG = "NEW_CONVERSION_DIALOG";
 
@@ -27,8 +29,7 @@ public class ConversionsActivity extends AppCompatActivity
     private FloatingActionButton addButton;
     private ConversionsAdapter adapter;
 
-    BroChefDbHelper dbHelper;
-    private int setId = 0; // 0 => brand new ConversionSet
+    private long setId = 0; // 0 => brand new ConversionSet
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,21 +38,33 @@ public class ConversionsActivity extends AppCompatActivity
         setContentView(R.layout.activity_conversions);
         setTitle("Conversions");
 
-        setId = getIntent().getIntExtra("setId", 0);
-
-        dbHelper = new BroChefDbHelper(this);
-
         conversionsList = (ListView)findViewById(R.id.conversions_list);
         addButton = (FloatingActionButton) findViewById(R.id.add_button);
 
         addButton.setOnClickListener(view -> handleAddButtonClick());
+
+        configureConversionSet();
+    }
+
+    private void configureConversionSet() {
+        addButton.setEnabled(false);
+        setId = getIntent().getIntExtra("setId", 0);
+        if (setId == 0) {
+            // insert new set TODO: move to background thread
+            ContentValues setValues =
+                    BroChefDbHelper.getValsForConversionSetInsert("Untitled");
+            Uri setUri = getContentResolver()
+                    .insert(BroChefContentProvider.CONVERSION_SETS_URI, setValues);
+            setId = Long.valueOf(setUri.getLastPathSegment());
+        }
+
+        getSupportLoaderManager().initLoader(1, null, this);
+        addButton.setEnabled(true);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        getSupportLoaderManager().initLoader(1, null, this);
     }
 
     @Override
@@ -79,9 +92,8 @@ public class ConversionsActivity extends AppCompatActivity
     }
 
     private void handleAddButtonClick() {
-        // TODO
         Bundle args = new Bundle();
-        args.putInt("setId", setId);
+        args.putLong("setId", setId);
         NewConversionDialog dialog = new NewConversionDialog();
         dialog.setArguments(args);
         dialog.show(getSupportFragmentManager(), NEW_CONVERSION_DIALOG_TAG);
@@ -93,19 +105,12 @@ public class ConversionsActivity extends AppCompatActivity
 
     @Override
     public Loader onCreateLoader(int id, Bundle args) {
-        return new CursorLoader(this, null, null, null, null, null)
-        {
-            @Override
-            public Cursor loadInBackground()
-            {
-                // You better know how to get your database.
-                SQLiteDatabase db = dbHelper.getReadableDatabase();
-                // You can use any query that returns a cursor.
-                return db.rawQuery("SELECT  * FROM " + BroChefDbHelper.TABLE_NAME_CONVERSIONS +
-                        " WHERE setId=?",
-                        new String[] {String.valueOf(setId)});
-            }
-        };
+        return new CursorLoader(this,
+                BroChefContentProvider.CONVERSIONS_URI,
+                null,
+                "setId=?",
+                new String[]{String.valueOf(setId)},
+                null);
     }
 
     @Override

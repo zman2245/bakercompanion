@@ -7,11 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.bigzindustries.brochefbakercompanion.models.Conversion;
-import com.bigzindustries.brochefbakercompanion.unitdata.Units;
 
 public class BroChefDbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
     public static final String DATABASE_NAME = "BroChef.db";
     public static final String TABLE_NAME_CONVERSION_SETS = "ConversionSets";
     public static final String TABLE_NAME_CONVERSIONS = "Conversions";
@@ -30,7 +29,7 @@ public class BroChefDbHelper extends SQLiteOpenHelper {
     private static final String SQL_CREATE_CONVERSION_SETS =
             "CREATE TABLE " + TABLE_NAME_CONVERSION_SETS + " (" +
                     "_id INTEGER PRIMARY KEY," +
-                    "name TEXT UNIQUE," +
+                    "name TEXT," +
                     "priority INTEGER)";
 
     private static final String SQL_DELETE_CONVERSIONS =
@@ -42,7 +41,7 @@ public class BroChefDbHelper extends SQLiteOpenHelper {
         return null;
     }
 
-    public void insertConversion(int setId, double fromValue, double toValue,
+    public long insertConversion(long setId, double fromValue, double toValue,
                                  String fromUnit, String toUnit, String ingredient) {
         ContentValues values = new ContentValues();
         values.put("ingredient", ingredient);
@@ -51,7 +50,35 @@ public class BroChefDbHelper extends SQLiteOpenHelper {
         values.put("fromValue", fromValue);
         values.put("toValue", toValue);
 
-        getWritableDatabase().insertOrThrow(TABLE_NAME_CONVERSIONS, null, values);
+        return getWritableDatabase().insertOrThrow(TABLE_NAME_CONVERSIONS, null, values);
+    }
+
+    public static ContentValues getValsForConversionSetInsert(String name) {
+        ContentValues values = new ContentValues();
+        values.put("name", name);
+        return values;
+    }
+
+    public static ContentValues getValsForConversionInsert(
+            long setId, double fromValue, double toValue,
+            String fromUnit, String toUnit, String ingredient) {
+
+        ContentValues values = new ContentValues();
+        values.put("setId", setId);
+        values.put("ingredient", ingredient);
+        values.put("fromUnit", fromUnit);
+        values.put("toUnit", toUnit);
+        values.put("fromValue", fromValue);
+        values.put("toValue", toValue);
+
+        return values;
+    }
+
+    public long insertConversionSet(String name) {
+        ContentValues values = new ContentValues();
+        values.put("name", name);
+
+        return getWritableDatabase().insertOrThrow(TABLE_NAME_CONVERSION_SETS, null, values);
     }
 
     public BroChefDbHelper(Context context) {
