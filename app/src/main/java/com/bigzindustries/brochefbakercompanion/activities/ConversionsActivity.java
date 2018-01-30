@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.app.NavUtils;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
@@ -44,22 +45,8 @@ public class ConversionsActivity extends AppCompatActivity
         addButton.setOnClickListener(view -> handleAddButtonClick());
 
         configureConversionSet();
-    }
 
-    private void configureConversionSet() {
-        addButton.setEnabled(false);
-        setId = getIntent().getIntExtra("setId", 0);
-        if (setId == 0) {
-            // insert new set TODO: move to background thread
-            ContentValues setValues =
-                    BroChefDbHelper.getValsForConversionSetInsert("Untitled");
-            Uri setUri = getContentResolver()
-                    .insert(BroChefContentProvider.CONVERSION_SETS_URI, setValues);
-            setId = Long.valueOf(setUri.getLastPathSegment());
-        }
-
-        getSupportLoaderManager().initLoader(1, null, this);
-        addButton.setEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -85,6 +72,9 @@ public class ConversionsActivity extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.menu_item_save:
                 save();
+                return true;
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
                 return true;
         }
 
@@ -123,5 +113,21 @@ public class ConversionsActivity extends AppCompatActivity
     @Override
     public void onLoaderReset(Loader loader) {
 
+    }
+
+    private void configureConversionSet() {
+        addButton.setEnabled(false);
+        setId = getIntent().getIntExtra("setId", 0);
+        if (setId == 0) {
+            // insert new set TODO: move to background thread
+            ContentValues setValues =
+                    BroChefDbHelper.getValsForConversionSetInsert("Untitled");
+            Uri setUri = getContentResolver()
+                    .insert(BroChefContentProvider.CONVERSION_SETS_URI, setValues);
+            setId = Long.valueOf(setUri.getLastPathSegment());
+        }
+
+        getSupportLoaderManager().initLoader(1, null, this);
+        addButton.setEnabled(true);
     }
 }

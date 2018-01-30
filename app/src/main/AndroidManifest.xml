@@ -21,7 +21,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.ConversionsActivity">
+        <activity android:name=".activities.ConversionsActivity"
+            android:parentActivityName="com.bigzindustries.brochefbakercompanion.activities.ConversionSetsActivity">
         </activity>
     </application>
 
