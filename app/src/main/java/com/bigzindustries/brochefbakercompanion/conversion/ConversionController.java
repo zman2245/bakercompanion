@@ -2,13 +2,18 @@ package com.bigzindustries.brochefbakercompanion.conversion;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.bigzindustries.brochefbakercompanion.R;
 import com.bigzindustries.brochefbakercompanion.db.BroChefContentProvider;
 import com.bigzindustries.brochefbakercompanion.db.BroChefDbHelper;
+import com.bigzindustries.brochefbakercompanion.unitdata.Conversions;
 import com.bigzindustries.brochefbakercompanion.unitdata.Ingredients;
 import com.bigzindustries.brochefbakercompanion.unitdata.Units;
 
@@ -19,7 +24,7 @@ import java.util.ArrayList;
  *
  * Setup the conversion calculation, listening for each change
  */
-public class ConversionController {
+public class ConversionController implements AdapterView.OnItemSelectedListener {
 
     EditText fromVal;
     EditText toVal;
@@ -27,7 +32,33 @@ public class ConversionController {
     Spinner toUnit;
     Spinner ingredient;
 
-    public void setupView(Context context, View view) {
+    TextWatcher fromTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            updateNumbers(false);
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {}
+    };
+
+    TextWatcher toTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            updateNumbers(true);
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {}
+    };
+
+    public ConversionController(Context context, View view) {
         ArrayList<Ingredients> ingredients = getIngredients();
         ArrayList<Units> units = getUnits();
 
@@ -45,6 +76,22 @@ public class ConversionController {
         fromUnit.setAdapter(unitAdapter);
         unitAdapter = new UnitSpinnerAdapter(context, units);
         toUnit.setAdapter(unitAdapter);
+
+        ingredient.setOnItemSelectedListener(this);
+        fromUnit.setOnItemSelectedListener(this);
+        toUnit.setOnItemSelectedListener(this);
+        fromVal.addTextChangedListener(fromTextWatcher);
+        toVal.addTextChangedListener(toTextWatcher);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        updateNumbers(false);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 
     public void addConversionToDb(Context context, long setId) {
@@ -58,6 +105,53 @@ public class ConversionController {
 
             context.getContentResolver().insert(BroChefContentProvider.CONVERSIONS_URI, values);
         }).start();
+    }
+
+    private Double getDoubleFromTextWidget(EditText text) {
+        if (TextUtils.isEmpty(text.getText().toString())) {
+            return 0.0;
+        } else {
+            try {
+                return Double.valueOf(text.getText().toString());
+            } catch (Exception e) {
+                return 0.0;
+            }
+        }
+    }
+
+    private void updateNumbers(boolean backwards) {
+        if (ingredient == null) {
+            throw new IllegalAccessError("Controller not initialized");
+        }
+
+        Double value;
+        Double conversionValue;
+
+        if (backwards) {
+            value = getDoubleFromTextWidget(toVal);
+        } else {
+            value = getDoubleFromTextWidget(fromVal);
+        }
+
+        String ingredientStr = ingredient.getSelectedItem().toString();
+        String fromUnitStr = fromUnit.getSelectedItem().toString();
+        String toUnitStr = toUnit.getSelectedItem().toString();
+
+        Ingredients ingredientEnum = Ingredients.valueOf(ingredientStr);
+        Units fromUnitEnum = Units.valueOf(fromUnitStr);
+        Units toUnitEnum = Units.valueOf(toUnitStr);
+
+        conversionValue = Conversions.convert(ingredientEnum, fromUnitEnum, toUnitEnum, value);
+
+        if (backwards) {
+            fromVal.removeTextChangedListener(fromTextWatcher);
+            fromVal.setText(conversionValue.toString());
+            fromVal.addTextChangedListener(fromTextWatcher);
+        } else {
+            toVal.removeTextChangedListener(toTextWatcher);
+            toVal.setText(conversionValue.toString());
+            toVal.addTextChangedListener(toTextWatcher);
+        }
     }
 
     // Java 8 stream API only works on API levels >= 24 :(

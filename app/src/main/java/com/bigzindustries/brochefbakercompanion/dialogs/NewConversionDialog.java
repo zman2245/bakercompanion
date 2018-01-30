@@ -14,7 +14,7 @@ import com.bigzindustries.brochefbakercompanion.conversion.ConversionController;
 
 public class NewConversionDialog extends DialogFragment {
 
-    ConversionController controller = new ConversionController();
+    ConversionController controller;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class NewConversionDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.conversion_view, null);
-        controller.setupView(getActivity(), view);
+        controller = new ConversionController(getActivity(), view);
         builder.setView(view)
                 .setPositiveButton("Add", (dialog, id) -> {
                     // Add to DB

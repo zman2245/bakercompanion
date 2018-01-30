@@ -36,7 +36,8 @@
             android:id="@+id/from_value"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:hint="0.0"/>
+            android:hint="0.0"
+            android:inputType="numberDecimal"/>
 
         <Spinner
             android:id="@+id/from_unit_spinner"
@@ -59,7 +60,8 @@
             android:id="@+id/to_value"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:hint="0.0"/>
+            android:hint="0.0"
+            android:inputType="numberDecimal"/>
 
         <Spinner
             android:id="@+id/to_unit_spinner"
