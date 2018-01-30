@@ -1,8 +1,6 @@
 package com.bigzindustries.brochefbakercompanion.activities;
 
-import android.content.ContentValues;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
@@ -18,13 +16,23 @@ import android.widget.ListView;
 import com.bigzindustries.brochefbakercompanion.R;
 import com.bigzindustries.brochefbakercompanion.adapters.ConversionsAdapter;
 import com.bigzindustries.brochefbakercompanion.db.BroChefContentProvider;
-import com.bigzindustries.brochefbakercompanion.db.BroChefDbHelper;
+import com.bigzindustries.brochefbakercompanion.dialogs.EditNameDialogFinished;
+import com.bigzindustries.brochefbakercompanion.dialogs.EditSetNameDialog;
 import com.bigzindustries.brochefbakercompanion.dialogs.NewConversionDialog;
 
+/**
+ * Manages a list of conversions, AKA a recipe or conversion set
+ *
+ * If no set id is passed, assumed to be a new set in the DB
+ */
 public class ConversionsActivity extends AppCompatActivity
-        implements LoaderManager.LoaderCallbacks<Cursor> {
+        implements LoaderManager.LoaderCallbacks<Cursor>, EditNameDialogFinished {
+
+    public static final String PARAM_CONV_SET_ID = "conversionSetId";
+    public static final String PARAM_CONV_SET_NAME = "name";
 
     private static final String NEW_CONVERSION_DIALOG_TAG = "NEW_CONVERSION_DIALOG";
+    private static final String EDIT_NAME_DIALOG_TAG = "EDIT_NAME_DIALOG_TAG";
 
     private ListView conversionsList;
     private FloatingActionButton addButton;
@@ -37,7 +45,7 @@ public class ConversionsActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_conversions);
-        setTitle("Conversions");
+        setTitle("");
 
         conversionsList = (ListView)findViewById(R.id.conversions_list);
         addButton = (FloatingActionButton) findViewById(R.id.add_button);
@@ -70,8 +78,10 @@ public class ConversionsActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.menu_item_edit:
+                showEditNameDialog();
+                return true;
             case R.id.menu_item_save:
-                save();
                 return true;
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
@@ -79,18 +89,6 @@ public class ConversionsActivity extends AppCompatActivity
         }
 
         return false;
-    }
-
-    private void handleAddButtonClick() {
-        Bundle args = new Bundle();
-        args.putLong("setId", setId);
-        NewConversionDialog dialog = new NewConversionDialog();
-        dialog.setArguments(args);
-        dialog.show(getSupportFragmentManager(), NEW_CONVERSION_DIALOG_TAG);
-    }
-
-    private void save() {
-        // TODO: write it to the DB
     }
 
     @Override
@@ -115,19 +113,44 @@ public class ConversionsActivity extends AppCompatActivity
 
     }
 
+    @Override
+    public void onNameChanged(boolean isNewDbEntry, long newSetId, String newName) {
+        setTitle(newName);
+
+        if (isNewDbEntry) {
+            // the conversion set is now in the DB so we can load it/add to it
+            setId = newSetId;
+            getSupportLoaderManager().initLoader(1, null, this);
+            addButton.setEnabled(true);
+        }
+    }
+
     private void configureConversionSet() {
         addButton.setEnabled(false);
-        setId = getIntent().getIntExtra("setId", 0);
+        setId = getIntent().getLongExtra(PARAM_CONV_SET_ID, 0);
         if (setId == 0) {
-            // insert new set TODO: move to background thread
-            ContentValues setValues =
-                    BroChefDbHelper.getValsForConversionSetInsert("Untitled");
-            Uri setUri = getContentResolver()
-                    .insert(BroChefContentProvider.CONVERSION_SETS_URI, setValues);
-            setId = Long.valueOf(setUri.getLastPathSegment());
+            showEditNameDialog();
+        } else {
+            setTitle(getIntent().getStringExtra(PARAM_CONV_SET_NAME));
+            getSupportLoaderManager().initLoader(1, null, this);
+            addButton.setEnabled(true);
         }
+    }
 
-        getSupportLoaderManager().initLoader(1, null, this);
-        addButton.setEnabled(true);
+    private void showEditNameDialog() {
+        Bundle args = new Bundle();
+        args.putLong(PARAM_CONV_SET_ID, setId);
+        args.putString(PARAM_CONV_SET_NAME, getTitle().toString());
+        EditSetNameDialog dialog = new EditSetNameDialog();
+        dialog.setArguments(args);
+        dialog.show(getSupportFragmentManager(), EDIT_NAME_DIALOG_TAG);
+    }
+
+    private void handleAddButtonClick() {
+        Bundle args = new Bundle();
+        args.putLong(PARAM_CONV_SET_ID, setId);
+        NewConversionDialog dialog = new NewConversionDialog();
+        dialog.setArguments(args);
+        dialog.show(getSupportFragmentManager(), NEW_CONVERSION_DIALOG_TAG);
     }
 }

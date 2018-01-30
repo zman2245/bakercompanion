@@ -121,7 +121,38 @@ public class BroChefContentProvider extends ContentProvider {
     }
 
     @Override
-    public int update(@NonNull Uri uri, @Nullable ContentValues contentValues, @Nullable String s, @Nullable String[] strings) {
-        return 0;
+    public int update(@NonNull Uri uri, @Nullable ContentValues contentValues,
+                      @Nullable String selection, @Nullable String[] selectionArgs) {
+        String table;
+        Uri notifyUri;
+        BroChefDbHelper dbHelper = new BroChefDbHelper(getContext());
+
+        switch (sUriMatcher.match(uri)) {
+            case 1:
+                table = BroChefDbHelper.TABLE_NAME_CONVERSIONS;
+                break;
+            case 2:
+                table = BroChefDbHelper.TABLE_NAME_CONVERSIONS;
+                selection = selection + "_ID = " + uri.getLastPathSegment();
+                break;
+            case 3:
+                table = BroChefDbHelper.TABLE_NAME_CONVERSION_SETS;
+                break;
+            case 4:
+                table = BroChefDbHelper.TABLE_NAME_CONVERSION_SETS;
+                selection = selection + "_ID = " + uri.getLastPathSegment();
+                break;
+
+            default:
+                throw new IllegalArgumentException("Unrecognized/Unsupported URI - " + uri);
+        }
+
+        int numAffected =
+                dbHelper.getWritableDatabase()
+                        .update(table, contentValues, selection, selectionArgs);
+
+        getContext().getContentResolver().notifyChange(uri, null);
+
+        return numAffected;
     }
 }

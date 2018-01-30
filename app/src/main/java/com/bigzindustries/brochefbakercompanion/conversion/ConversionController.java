@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -77,11 +78,7 @@ public class ConversionController implements AdapterView.OnItemSelectedListener 
         unitAdapter = new UnitSpinnerAdapter(context, units);
         toUnit.setAdapter(unitAdapter);
 
-        ingredient.setOnItemSelectedListener(this);
-        fromUnit.setOnItemSelectedListener(this);
-        toUnit.setOnItemSelectedListener(this);
-        fromVal.addTextChangedListener(fromTextWatcher);
-        toVal.addTextChangedListener(toTextWatcher);
+        addAllChangeListeners();
     }
 
     @Override
@@ -107,6 +104,21 @@ public class ConversionController implements AdapterView.OnItemSelectedListener 
         }).start();
     }
 
+    public void setValues(String newIngredient, String newFromUnit, String newToUnit,
+                          double newFromVal, double newToVal) {
+        int pos = ((ArrayAdapter)ingredient.getAdapter()).getPosition(Ingredients.valueOf(newIngredient));
+        ingredient.setSelection(pos);
+
+        pos = ((ArrayAdapter)fromUnit.getAdapter()).getPosition(Units.valueOf(newFromUnit));
+        fromUnit.setSelection(pos);
+
+        pos = ((ArrayAdapter)toUnit.getAdapter()).getPosition(Units.valueOf(newToUnit));
+        toUnit.setSelection(pos);
+
+        fromVal.setText(String.valueOf(newFromVal));
+        toVal.setText(String.valueOf(newToVal));
+    }
+
     private Double getDoubleFromTextWidget(EditText text) {
         if (TextUtils.isEmpty(text.getText().toString())) {
             return 0.0;
@@ -119,7 +131,26 @@ public class ConversionController implements AdapterView.OnItemSelectedListener 
         }
     }
 
+    private void removeAllChangeListeners() {
+        ingredient.setOnItemSelectedListener(null);
+        fromUnit.setOnItemSelectedListener(null);
+        toUnit.setOnItemSelectedListener(null);
+        fromVal.removeTextChangedListener(fromTextWatcher);
+        toVal.removeTextChangedListener(toTextWatcher);
+
+    }
+
+    private void addAllChangeListeners() {
+        ingredient.setOnItemSelectedListener(this);
+        fromUnit.setOnItemSelectedListener(this);
+        toUnit.setOnItemSelectedListener(this);
+        fromVal.addTextChangedListener(fromTextWatcher);
+        toVal.addTextChangedListener(toTextWatcher);
+    }
+
     private void updateNumbers(boolean backwards) {
+        removeAllChangeListeners();
+
         if (ingredient == null) {
             throw new IllegalAccessError("Controller not initialized");
         }
@@ -144,14 +175,12 @@ public class ConversionController implements AdapterView.OnItemSelectedListener 
         conversionValue = Conversions.convert(ingredientEnum, fromUnitEnum, toUnitEnum, value);
 
         if (backwards) {
-            fromVal.removeTextChangedListener(fromTextWatcher);
             fromVal.setText(conversionValue.toString());
-            fromVal.addTextChangedListener(fromTextWatcher);
         } else {
-            toVal.removeTextChangedListener(toTextWatcher);
             toVal.setText(conversionValue.toString());
-            toVal.addTextChangedListener(toTextWatcher);
         }
+
+        addAllChangeListeners();
     }
 
     // Java 8 stream API only works on API levels >= 24 :(

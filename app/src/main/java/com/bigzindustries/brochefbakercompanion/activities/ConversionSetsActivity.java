@@ -8,6 +8,8 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.bigzindustries.brochefbakercompanion.R;
@@ -19,7 +21,7 @@ import com.bigzindustries.brochefbakercompanion.db.BroChefDbHelper;
  * Displays and allows management of conversion sets
  */
 public class ConversionSetsActivity extends AppCompatActivity
-        implements LoaderManager.LoaderCallbacks<Cursor> {
+        implements LoaderManager.LoaderCallbacks<Cursor>, AdapterView.OnItemClickListener {
 
     BroChefDbHelper dbHelper;
     ListView conversionSetsList;
@@ -38,6 +40,7 @@ public class ConversionSetsActivity extends AppCompatActivity
         dbHelper = new BroChefDbHelper(this);
 
         conversionSetsList.setEmptyView(findViewById(R.id.empty_text));
+        conversionSetsList.setOnItemClickListener(this);
 
         addButton.setOnClickListener(view -> handleAddButtonClick());
 
@@ -70,5 +73,18 @@ public class ConversionSetsActivity extends AppCompatActivity
     @Override
     public void onLoaderReset(Loader loader) {
 
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        // hacky dealing with DB this directly here but fine for now
+        Cursor cursor = (Cursor)adapterView.getAdapter().getItem(i);
+        long id = cursor.getLong(cursor.getColumnIndex("_id"));
+        String name = cursor.getString(cursor.getColumnIndex("name"));
+
+        Intent intent = new Intent(this, ConversionsActivity.class);
+        intent.putExtra(ConversionsActivity.PARAM_CONV_SET_ID, id);
+        intent.putExtra(ConversionsActivity.PARAM_CONV_SET_NAME, name);
+        startActivity(intent);
     }
 }

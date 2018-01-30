@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bigzindustries.brochefbakercompanion.R;
+import com.bigzindustries.brochefbakercompanion.activities.ConversionsActivity;
 import com.bigzindustries.brochefbakercompanion.conversion.ConversionController;
 
 public class NewConversionDialog extends DialogFragment {
@@ -18,7 +19,7 @@ public class NewConversionDialog extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final long setId = getArguments().getLong("setId");
+        final long setId = getArguments().getLong(ConversionsActivity.PARAM_CONV_SET_ID);
 
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
