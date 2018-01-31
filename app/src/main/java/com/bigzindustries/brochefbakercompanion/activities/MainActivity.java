@@ -17,6 +17,9 @@ public class MainActivity extends KeepScreenOnActivity {
 
         setContentView(R.layout.activity_main);
 
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         conversionController = new ConversionController(this, findViewById(R.id.conversion));
 
         findViewById(R.id.btn_my_recipes).setOnClickListener(view -> {
