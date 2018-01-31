@@ -83,8 +83,6 @@ public class ConversionsActivity extends AppCompatActivity
             case R.id.menu_item_edit:
                 showEditNameDialog();
                 return true;
-            case R.id.menu_item_save:
-                return true;
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;

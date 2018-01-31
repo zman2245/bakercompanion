@@ -5,4 +5,46 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="MainHeader">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#000</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="CheatSheetHeader">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#000</item>
+        <item name="android:textStyle">bold|italic</item>
+    </style>
+
+    <style name="CheatSheetItemGroup">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">3dp</item>
+    </style>
+
+    <style name="CheatSheetItemText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#222</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="CheatSheetItemTextLeft" parent="CheatSheetItemText">
+        <item name="android:layout_alignParentLeft">true</item>
+    </style>
+
+    <style name="CheatSheetItemTextRight" parent="CheatSheetItemText">
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
+    <style name="CheatSheetItemTextRightIndented" parent="CheatSheetItemTextRight">
+        <item name="android:paddingRight">50dp</item>
+    </style>
 </resources>

@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_item_edit"
+        android:id="@+id/menu_item_my_recipes"
         android:enabled="true"
         app:showAsAction="ifRoom"
-        android:title="Edit">
+        android:title="My Recipes">
     </item>
 
 </menu>

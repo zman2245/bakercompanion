@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        tools:context="com.bigzindustries.brochefbakercompanion.activities.CheatSheetActivity">
+
+
+        <TextView
+            style="@style/CheatSheetHeader"
+            android:text="Volume"/>
+        <RelativeLayout
+            style="@style/CheatSheetItemGroup">
+            <TextView
+                style="@style/CheatSheetItemTextLeft"
+                android:text="1 Tablespoon"/>
+            <TextView
+                style="@style/CheatSheetItemTextRightIndented"
+                android:text="3 teaspoons"/>
+        </RelativeLayout>
+        <RelativeLayout
+            style="@style/CheatSheetItemGroup">
+            <TextView
+                style="@style/CheatSheetItemTextLeft"
+                android:text="1 Cup"/>
+            <TextView
+                style="@style/CheatSheetItemTextRightIndented"
+                android:text="16 Tablespoons"/>
+        </RelativeLayout>
+        <RelativeLayout
+            style="@style/CheatSheetItemGroup">
+            <TextView
+                style="@style/CheatSheetItemTextLeft"
+                android:text="1 Cup"/>
+            <TextView
+                style="@style/CheatSheetItemTextRightIndented"
+                android:text="48 teaspoons"/>
+        </RelativeLayout>
+
+
+        <TextView
+            style="@style/CheatSheetHeader"
+            android:text="Volume to Grams, Ounces"/>
+        <RelativeLayout
+            style="@style/CheatSheetItemGroup">
+            <TextView
+                style="@style/CheatSheetItemTextLeft"
+                android:text="1 Cup AP Flour"/>
+            <TextView
+                style="@style/CheatSheetItemTextRightIndented"
+                android:text="142 g, 5 oz"/>
+        </RelativeLayout>
+        <RelativeLayout
+            style="@style/CheatSheetItemGroup">
+            <TextView
+                style="@style/CheatSheetItemTextLeft"
+                android:text="1 Cup Cake Flour"/>
+            <TextView
+                style="@style/CheatSheetItemTextRightIndented"
+                android:text="113 g, 4 oz"/>
+        </RelativeLayout>
+        <RelativeLayout
+            style="@style/CheatSheetItemGroup">
+            <TextView
+                style="@style/CheatSheetItemTextLeft"
+                android:text="1 Cup Whole Wheat Flour"/>
+            <TextView
+                style="@style/CheatSheetItemTextRightIndented"
+                android:text="156 g, 5.5 oz"/>
+        </RelativeLayout>
+        <RelativeLayout
+            style="@style/CheatSheetItemGroup">
+            <TextView
+                style="@style/CheatSheetItemTextLeft"
+                android:text="1 Cup Sugar"/>
+            <TextView
+                style="@style/CheatSheetItemTextRightIndented"
+                android:text="198 g, 7 oz"/>
+        </RelativeLayout>
+        <RelativeLayout
+            style="@style/CheatSheetItemGroup">
+            <TextView
+                style="@style/CheatSheetItemTextLeft"
+                android:text="1 Cup Packed Brown Sugar"/>
+            <TextView
+                style="@style/CheatSheetItemTextRightIndented"
+                android:text="198 g, 7 oz"/>
+        </RelativeLayout>
+        <RelativeLayout
+            style="@style/CheatSheetItemGroup">
+            <TextView
+                style="@style/CheatSheetItemTextLeft"
+                android:text="1 Cup Powdered Sugar"/>
+            <TextView
+                style="@style/CheatSheetItemTextRightIndented"
+                android:text="113 g, 4 oz"/>
+        </RelativeLayout>
+        <RelativeLayout
+            style="@style/CheatSheetItemGroup">
+            <TextView
+                style="@style/CheatSheetItemTextLeft"
+                android:text="1 Cup Cocoa Powder"/>
+            <TextView
+                style="@style/CheatSheetItemTextRightIndented"
+                android:text="85 g, 3 oz"/>
+        </RelativeLayout>
+        <RelativeLayout
+            style="@style/CheatSheetItemGroup">
+            <TextView
+                style="@style/CheatSheetItemTextLeft"
+                android:text="1 Stick/0.5 Cup/8 Tablespoons Butter"/>
+            <TextView
+                style="@style/CheatSheetItemTextRightIndented"
+                android:text="113 g, 4 oz"/>
+        </RelativeLayout>
+        <RelativeLayout
+            style="@style/CheatSheetItemGroup">
+            <TextView
+                style="@style/CheatSheetItemTextLeft"
+                android:text="0.5 Stick/0.25 Cup/4 Tablespoons Butter"/>
+            <TextView
+                style="@style/CheatSheetItemTextRightIndented"
+                android:text="57 g, 2 oz"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+</ScrollView>
