@@ -64,6 +64,8 @@ public class ConversionsActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_conversions, menu);
 
@@ -88,7 +90,7 @@ public class ConversionsActivity extends AppCompatActivity
                 return true;
         }
 
-        return false;
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
