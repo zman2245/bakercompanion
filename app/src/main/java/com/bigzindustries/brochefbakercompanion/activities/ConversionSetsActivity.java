@@ -5,9 +5,11 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.app.NavUtils;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -45,6 +47,8 @@ public class ConversionSetsActivity extends AppCompatActivity
         addButton.setOnClickListener(view -> handleAddButtonClick());
 
         getSupportLoaderManager().initLoader(1, null, this);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -52,9 +56,15 @@ public class ConversionSetsActivity extends AppCompatActivity
         super.onResume();
     }
 
-    private void handleAddButtonClick() {
-        Intent intent = new Intent(this, ConversionsActivity.class);
-        startActivity(intent);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -85,6 +95,11 @@ public class ConversionSetsActivity extends AppCompatActivity
         Intent intent = new Intent(this, ConversionsActivity.class);
         intent.putExtra(ConversionsActivity.PARAM_CONV_SET_ID, id);
         intent.putExtra(ConversionsActivity.PARAM_CONV_SET_NAME, name);
+        startActivity(intent);
+    }
+
+    private void handleAddButtonClick() {
+        Intent intent = new Intent(this, ConversionsActivity.class);
         startActivity(intent);
     }
 }

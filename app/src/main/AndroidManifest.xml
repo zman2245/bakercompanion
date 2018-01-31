@@ -13,12 +13,16 @@
         <provider android:name="com.bigzindustries.brochefbakercompanion.db.BroChefContentProvider"
             android:authorities="com.bigzindustries.brochefbakercompanion.provider"/>
 
-        <activity android:name=".activities.ConversionSetsActivity">
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity android:name=".activities.ConversionSetsActivity"
+            android:parentActivityName="com.bigzindustries.brochefbakercompanion.activities.MainActivity">
         </activity>
 
         <activity android:name=".activities.ConversionsActivity"
