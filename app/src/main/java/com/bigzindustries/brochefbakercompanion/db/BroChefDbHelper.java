@@ -2,15 +2,12 @@ package com.bigzindustries.brochefbakercompanion.db;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.bigzindustries.brochefbakercompanion.models.Conversion;
-
 public class BroChefDbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 5;
     public static final String DATABASE_NAME = "BroChef.db";
     public static final String TABLE_NAME_CONVERSION_SETS = "ConversionSets";
     public static final String TABLE_NAME_CONVERSIONS = "Conversions";
@@ -36,10 +33,17 @@ public class BroChefDbHelper extends SQLiteOpenHelper {
             "DROP TABLE IF EXISTS " + TABLE_NAME_CONVERSIONS;
     private static final String SQL_DELETE_CONVERSION_SETS =
             "DROP TABLE IF EXISTS " + TABLE_NAME_CONVERSION_SETS;
+    private static final String SQL_DELETE_TRIGGERS =
+            "DROP TRIGGER IF EXISTS before_delete_conv_sets";
 
-    public static Conversion buildConversion(Cursor cursor) {
-        return null;
-    }
+    // Triggers
+    private static final String SQL_CASCADE_DELETE_CONVERSIONS_TRIGGER =
+            "CREATE TRIGGER before_delete_conv_sets " +
+                    "BEFORE DELETE ON " + TABLE_NAME_CONVERSION_SETS +
+                    " FOR EACH ROW BEGIN " +
+                    "DELETE FROM " + TABLE_NAME_CONVERSIONS +
+                    " WHERE " + TABLE_NAME_CONVERSIONS + ".setId = old._id; " +
+                    "END";
 
     public long insertConversion(long setId, double fromValue, double toValue,
                                  String fromUnit, String toUnit, String ingredient) {
@@ -87,11 +91,13 @@ public class BroChefDbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_CONVERSIONS);
         db.execSQL(SQL_CREATE_CONVERSION_SETS);
+        db.execSQL(SQL_CASCADE_DELETE_CONVERSIONS_TRIGGER);
     }
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Just trash it for now
         db.execSQL(SQL_DELETE_CONVERSIONS);
         db.execSQL(SQL_DELETE_CONVERSION_SETS);
+        db.execSQL(SQL_DELETE_TRIGGERS);
         onCreate(db);
     }
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
