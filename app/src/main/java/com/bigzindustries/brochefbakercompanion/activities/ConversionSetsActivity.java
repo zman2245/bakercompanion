@@ -94,10 +94,13 @@ public class ConversionSetsActivity extends AppCompatActivity
         Cursor cursor = (Cursor)adapterView.getAdapter().getItem(i);
         long id = cursor.getLong(cursor.getColumnIndex("_id"));
         String name = cursor.getString(cursor.getColumnIndex("name"));
+        String notes = cursor.getString(cursor.getColumnIndex("notes"));
 
         Intent intent = new Intent(this, ConversionsActivity.class);
         intent.putExtra(ConversionsActivity.PARAM_CONV_SET_ID, id);
         intent.putExtra(ConversionsActivity.PARAM_CONV_SET_NAME, name);
+        intent.putExtra(ConversionsActivity.PARAM_CONV_SET_NOTES, notes);
+
         startActivity(intent);
     }
 

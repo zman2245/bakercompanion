@@ -6,6 +6,7 @@
         android:id="@+id/menu_item_edit"
         android:enabled="true"
         app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_mode_edit_white_24dp"
         android:title="Edit">
     </item>
 

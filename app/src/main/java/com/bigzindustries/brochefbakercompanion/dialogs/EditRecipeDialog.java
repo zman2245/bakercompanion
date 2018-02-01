@@ -18,39 +18,51 @@ import com.bigzindustries.brochefbakercompanion.activities.ConversionsActivity;
 import com.bigzindustries.brochefbakercompanion.db.BroChefContentProvider;
 import com.bigzindustries.brochefbakercompanion.db.BroChefDbHelper;
 
-public class EditSetNameDialog extends DialogFragment {
+public class EditRecipeDialog extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        if (!(getActivity() instanceof EditNameDialogFinished)) {
+        if (!(getActivity() instanceof EditRecipeDialogFinished)) {
             throw new IllegalAccessError("Parent Activity must implement " +
-                    EditNameDialogFinished.class.toString());
+                    EditRecipeDialogFinished.class.toString());
         }
 
         final long setId = getArguments().getLong(ConversionsActivity.PARAM_CONV_SET_ID);
-        final String setName = getArguments().getString(ConversionsActivity.PARAM_CONV_SET_NAME, "");
+        final String recipeName = getArguments().getString(ConversionsActivity.PARAM_CONV_SET_NAME, "");
+        final String recipeNotes = getArguments().getString(ConversionsActivity.PARAM_CONV_SET_NOTES, "");
 
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.edit_name_dialog, null);
+        View view = inflater.inflate(R.layout.edit_recipe_dialog, null);
         EditText name = view.findViewById(R.id.edit_name);
-        name.setText(setName);
+        EditText notes = view.findViewById(R.id.edit_notes);
+
+        name.setText(recipeName);
+        notes.setText(recipeNotes);
+
         builder.setView(view)
                 .setPositiveButton("Save", (dialog, id) -> {
                     String newName = name.getText().toString();
+                    String newNotes = notes.getText().toString();
+
                     if (TextUtils.isEmpty(newName)) {
                         newName = "Untitled Recipe";
                     }
 
+                    if (TextUtils.isEmpty(newNotes)) {
+                        newNotes = "";
+                    }
+
                     ContentValues setValues =
-                            BroChefDbHelper.getValsForConversionSetInsert(newName);
+                            BroChefDbHelper.getValsForConversionSetInsert(newName, newNotes);
+
                     if (setId <= 0) {
                         Uri setUri = getActivity().getContentResolver()
                                 .insert(BroChefContentProvider.CONVERSION_SETS_URI, setValues);
                         long newSetId = Long.valueOf(setUri.getLastPathSegment());
 
-                        ((EditNameDialogFinished)getActivity()).onNameChanged(true, newSetId, newName);
+                        ((EditRecipeDialogFinished)getActivity()).onRecipeChanged(true, newSetId, newName, newNotes);
                     } else {
                         getActivity().getContentResolver()
                                 .update(BroChefContentProvider.CONVERSION_SETS_URI,
@@ -58,7 +70,7 @@ public class EditSetNameDialog extends DialogFragment {
                                         "_id=?",
                                         new String[]{String.valueOf(setId)});
 
-                        ((EditNameDialogFinished)getActivity()).onNameChanged(false, setId, newName);
+                        ((EditRecipeDialogFinished)getActivity()).onRecipeChanged(false, setId, newName, newNotes);
                     }
                 })
                 .setNegativeButton("Cancel", (dialog, id) -> dismiss());

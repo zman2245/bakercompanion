@@ -16,12 +16,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.bigzindustries.brochefbakercompanion.R;
 import com.bigzindustries.brochefbakercompanion.adapters.ConversionsAdapter;
 import com.bigzindustries.brochefbakercompanion.db.BroChefContentProvider;
-import com.bigzindustries.brochefbakercompanion.dialogs.EditNameDialogFinished;
-import com.bigzindustries.brochefbakercompanion.dialogs.EditSetNameDialog;
+import com.bigzindustries.brochefbakercompanion.dialogs.EditRecipeDialogFinished;
+import com.bigzindustries.brochefbakercompanion.dialogs.EditRecipeDialog;
 import com.bigzindustries.brochefbakercompanion.dialogs.NewConversionDialog;
 
 /**
@@ -30,17 +31,18 @@ import com.bigzindustries.brochefbakercompanion.dialogs.NewConversionDialog;
  * If no set id is passed, assumed to be a new set in the DB
  */
 public class ConversionsActivity extends AppCompatActivity
-        implements LoaderManager.LoaderCallbacks<Cursor>, EditNameDialogFinished {
+        implements LoaderManager.LoaderCallbacks<Cursor>, EditRecipeDialogFinished {
 
     public static final String PARAM_CONV_SET_ID = "conversionSetId";
     public static final String PARAM_CONV_SET_NAME = "name";
+    public static final String PARAM_CONV_SET_NOTES = "notes";
 
     private static final String NEW_CONVERSION_DIALOG_TAG = "NEW_CONVERSION_DIALOG";
     private static final String EDIT_NAME_DIALOG_TAG = "EDIT_NAME_DIALOG_TAG";
 
     private ListView conversionsList;
     private FloatingActionButton addButton;
-    private ConversionsAdapter adapter;
+    private TextView notesView;
 
     private long setId = 0; // 0 => brand new ConversionSet
 
@@ -52,8 +54,10 @@ public class ConversionsActivity extends AppCompatActivity
         setTitle("");
 
         conversionsList = (ListView)findViewById(R.id.conversions_list);
-        registerForContextMenu(conversionsList);
         addButton = (FloatingActionButton) findViewById(R.id.add_button);
+        notesView = (TextView)findViewById(R.id.notes);
+
+        registerForContextMenu(conversionsList);
 
         addButton.setOnClickListener(view -> handleAddButtonClick());
 
@@ -86,7 +90,7 @@ public class ConversionsActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_item_edit:
-                showEditNameDialog();
+                showEditDialog();
                 return true;
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
@@ -119,8 +123,10 @@ public class ConversionsActivity extends AppCompatActivity
     }
 
     @Override
-    public void onNameChanged(boolean isNewDbEntry, long newSetId, String newName) {
+    public void onRecipeChanged(boolean isNewDbEntry, long newSetId,
+                                String newName, String newNotes) {
         setTitle(newName);
+        notesView.setText(newNotes);
 
         if (isNewDbEntry) {
             // the conversion set is now in the DB so we can load it/add to it
@@ -158,19 +164,23 @@ public class ConversionsActivity extends AppCompatActivity
         addButton.setEnabled(false);
         setId = getIntent().getLongExtra(PARAM_CONV_SET_ID, 0);
         if (setId == 0) {
-            showEditNameDialog();
+            showEditDialog();
         } else {
             setTitle(getIntent().getStringExtra(PARAM_CONV_SET_NAME));
+            notesView.setText(getIntent().getStringExtra(PARAM_CONV_SET_NOTES));
             getSupportLoaderManager().initLoader(1, null, this);
             addButton.setEnabled(true);
         }
     }
 
-    private void showEditNameDialog() {
+    private void showEditDialog() {
         Bundle args = new Bundle();
+        EditRecipeDialog dialog = new EditRecipeDialog();
+
         args.putLong(PARAM_CONV_SET_ID, setId);
         args.putString(PARAM_CONV_SET_NAME, getTitle().toString());
-        EditSetNameDialog dialog = new EditSetNameDialog();
+        args.putString(PARAM_CONV_SET_NOTES, notesView.getText().toString());
+
         dialog.setArguments(args);
         dialog.show(getSupportFragmentManager(), EDIT_NAME_DIALOG_TAG);
     }

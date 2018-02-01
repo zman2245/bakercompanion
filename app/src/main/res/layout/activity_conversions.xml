@@ -5,10 +5,25 @@
     android:layout_height="match_parent"
     tools:context="com.bigzindustries.brochefbakercompanion.activities.ConversionsActivity">
 
+    <TextView
+        android:id="@+id/notes"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:padding="10dp"
+        android:hint="Add notes to your recipe..."
+        android:textColor="#161616"/>
+    <View
+        android:id="@+id/notes_divider"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@id/notes"
+        android:background="@color/colorPrimary"/>
+
     <ListView
         android:id="@+id/conversions_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/notes_divider"
         />
 
     <android.support.design.widget.FloatingActionButton
