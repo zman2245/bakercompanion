@@ -24,7 +24,7 @@ public class NewConversionDialog extends DialogFragment {
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.conversion_view, null);
+        View view = inflater.inflate(R.layout.conversion_view_v2, null);
         controller = new ConversionController(getActivity(), view);
         builder.setView(view)
                 .setPositiveButton("Add", (dialog, id) -> {
