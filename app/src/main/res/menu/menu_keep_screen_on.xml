@@ -5,8 +5,9 @@
     <item
         android:id="@+id/menu_item_lock_screen_toggle"
         android:enabled="true"
-        app:showAsAction="ifRoom"
-        android:title="Screen On">
+        app:showAsAction="always"
+        app:actionLayout="@layout/custom_menu_item_screen_switch"
+        android:title="">
     </item>
 
 </menu>

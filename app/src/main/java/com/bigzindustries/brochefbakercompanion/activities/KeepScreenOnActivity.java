@@ -8,6 +8,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.widget.Switch;
+import android.widget.Toast;
 
 import com.bigzindustries.brochefbakercompanion.R;
 
@@ -20,8 +22,6 @@ public class KeepScreenOnActivity extends AppCompatActivity {
     public void onCreate(@Nullable Bundle savedInstanceState,
                          @Nullable PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
-
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     @Override
@@ -30,6 +30,24 @@ public class KeepScreenOnActivity extends AppCompatActivity {
 
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_keep_screen_on, menu);
+
+        Switch switchAB = menu.findItem(R.id.menu_item_lock_screen_toggle)
+                .getActionView().findViewById(R.id.toggle);
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        switchAB.setChecked(true);
+
+        switchAB.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                Toast.makeText(getApplication(), "Screen will stay on so you can easily see conversions while baking", Toast.LENGTH_SHORT)
+                        .show();
+            } else {
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+                Toast.makeText(getApplication(), "Screen will now turn off on its own", Toast.LENGTH_SHORT)
+                        .show();
+            }
+        });
 
         return true;
     }
