@@ -3,12 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="50dp"
+    android:padding="10dp"
     tools:context="com.bigzindustries.brochefbakercompanion.activities.ConversionSetsActivity">
 
     <TextView
         android:id="@+id/name"
+        style="@style/ConversionsListText"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center_vertical"
         android:text="Text goes here"
         />
 

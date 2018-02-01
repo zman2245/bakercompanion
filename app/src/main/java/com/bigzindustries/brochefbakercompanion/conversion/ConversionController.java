@@ -7,9 +7,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -117,21 +115,6 @@ public class ConversionController implements AdapterView.OnItemSelectedListener 
         }).start();
     }
 
-    public void setValues(String newIngredient, String newFromUnit, String newToUnit,
-                          double newFromVal, double newToVal) {
-        int pos = ((ArrayAdapter)ingredient.getAdapter()).getPosition(Ingredients.valueOf(newIngredient));
-        ingredient.setSelection(pos);
-
-        pos = ((ArrayAdapter)fromUnit.getAdapter()).getPosition(Units.valueOf(newFromUnit));
-        fromUnit.setSelection(pos);
-
-        pos = ((ArrayAdapter)toUnit.getAdapter()).getPosition(Units.valueOf(newToUnit));
-        toUnit.setSelection(pos);
-
-        fromVal.setText(String.valueOf(newFromVal));
-        toVal.setText(String.valueOf(newToVal));
-    }
-
     private Double getDoubleFromTextWidget(EditText text) {
         if (TextUtils.isEmpty(text.getText().toString())) {
             return 0.0;
@@ -211,4 +194,19 @@ public class ConversionController implements AdapterView.OnItemSelectedListener 
 
         return units;
     }
+
+    //    public void setValues(String newIngredient, String newFromUnit, String newToUnit,
+//                          double newFromVal, double newToVal) {
+//        int pos = ((ArrayAdapter)ingredient.getAdapter()).getPosition(Ingredients.valueOf(newIngredient));
+//        ingredient.setSelection(pos);
+//
+//        pos = ((ArrayAdapter)fromUnit.getAdapter()).getPosition(Units.valueOf(newFromUnit));
+//        fromUnit.setSelection(pos);
+//
+//        pos = ((ArrayAdapter)toUnit.getAdapter()).getPosition(Units.valueOf(newToUnit));
+//        toUnit.setSelection(pos);
+//
+//        fromVal.setText(String.valueOf(newFromVal));
+//        toVal.setText(String.valueOf(newToVal));
+//    }
 }
