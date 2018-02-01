@@ -1,6 +1,7 @@
 package com.bigzindustries.brochefbakercompanion.activities;
 
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
@@ -8,9 +9,12 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.bigzindustries.brochefbakercompanion.R;
@@ -48,6 +52,7 @@ public class ConversionsActivity extends AppCompatActivity
         setTitle("");
 
         conversionsList = (ListView)findViewById(R.id.conversions_list);
+        registerForContextMenu(conversionsList);
         addButton = (FloatingActionButton) findViewById(R.id.add_button);
 
         addButton.setOnClickListener(view -> handleAddButtonClick());
@@ -122,6 +127,30 @@ public class ConversionsActivity extends AppCompatActivity
             setId = newSetId;
             getSupportLoaderManager().initLoader(1, null, this);
             addButton.setEnabled(true);
+        }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        if (v.getId() == R.id.conversions_list) {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.menu_contextual_delete, menu);
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch(item.getItemId()) {
+            case R.id.delete:
+                // remove stuff here
+                Uri uri = Uri.withAppendedPath(BroChefContentProvider.CONVERSIONS_URI,
+                        String.valueOf(info.id));
+                getContentResolver().delete(uri, null, null);
+                return true;
+            default:
+                return super.onContextItemSelected(item);
         }
     }
 

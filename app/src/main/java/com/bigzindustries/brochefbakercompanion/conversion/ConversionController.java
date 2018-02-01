@@ -101,9 +101,14 @@ public class ConversionController implements AdapterView.OnItemSelectedListener 
 
     public void addConversionToDb(Context context, long setId) {
         new Thread(() -> {
+            double from = TextUtils.isEmpty(fromVal.getText().toString()) ? 0.0 :
+                    Double.valueOf(fromVal.getText().toString());
+            double to = TextUtils.isEmpty(toVal.getText().toString()) ? 0.0 :
+                    Double.valueOf(toVal.getText().toString());
+
             ContentValues values = BroChefDbHelper.getValsForConversionInsert(setId,
-                    Double.valueOf(fromVal.getText().toString()),
-                    Double.valueOf(toVal.getText().toString()),
+                    from,
+                    to,
                     fromUnit.getSelectedItem().toString(),
                     toUnit.getSelectedItem().toString(),
                     ingredient.getSelectedItem().toString());
