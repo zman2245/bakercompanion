@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -33,6 +34,7 @@ public class ConversionController implements AdapterView.OnItemSelectedListener 
     Spinner fromUnit;
     Spinner toUnit;
     Spinner ingredient;
+    View swap;
 
     TextWatcher fromTextWatcher = new TextWatcher() {
         @Override
@@ -56,6 +58,7 @@ public class ConversionController implements AdapterView.OnItemSelectedListener 
         toUnit = view.findViewById(R.id.to_unit_spinner);
         fromVal = view.findViewById(R.id.from_value);
         toVal = view.findViewById(R.id.to_value);
+        swap = view.findViewById(R.id.swap);
 
         IngredientSpinnerAdapter ingredientsAdapter =
                 new IngredientSpinnerAdapter(context, ingredients);
@@ -67,6 +70,23 @@ public class ConversionController implements AdapterView.OnItemSelectedListener 
         toUnit.setAdapter(unitAdapter);
 
         addAllChangeListeners();
+
+        swap.setOnClickListener(clickedView -> {
+            removeAllChangeListeners();
+
+            int tmpPos = toUnit.getSelectedItemPosition();
+            CharSequence tmpVal = toVal.getText();
+
+            toUnit.setSelection(fromUnit.getSelectedItemPosition());
+            toVal.setText(fromVal.getText());
+
+            fromUnit.setSelection(tmpPos);
+            fromVal.setText(tmpVal);
+
+            addAllChangeListeners();
+
+            updateNumbers();
+        });
     }
 
     @Override

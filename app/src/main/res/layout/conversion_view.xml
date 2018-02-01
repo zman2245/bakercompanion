@@ -22,8 +22,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
+            android:padding="5dp"
             android:textSize="16sp"
             android:textColor="#000"
+            android:textStyle="bold"
             android:text="Ingredient"/>
 
         <Spinner
@@ -35,49 +37,65 @@
             />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/from"
-        android:layout_weight="4"
+    <LinearLayout
+        android:id="@+id/from_and_to"
+        android:layout_weight="7"
         android:layout_width="0dp"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="2">
 
-        <EditText
-            android:id="@+id/from_value"
+        <RelativeLayout
+            android:id="@+id/from"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:hint="0.0"
-            android:inputType="numberDecimal"
-            android:textColor="#000"/>
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-        <Spinner
-            android:id="@+id/from_unit_spinner"
+            <EditText
+                android:id="@+id/from_value"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:hint="0.0"
+                android:inputType="numberDecimal"
+                android:textColor="#000"/>
+
+            <Spinner
+                android:id="@+id/from_unit_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/from_value"
+                android:layout_marginTop="10dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/to"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@id/from_value"
-            android:layout_marginTop="10dp" />
-    </RelativeLayout>
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-    <RelativeLayout
-        android:id="@+id/to"
-        android:layout_weight="4"
+            <EditText
+                android:id="@+id/to_value"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:hint="0.0"
+                android:inputType="numberDecimal"
+                android:enabled="false"
+                android:textColor="#333"/>
+
+            <Spinner
+                android:id="@+id/to_unit_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/to_value"
+                android:layout_marginTop="10dp"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/swap"
+        android:layout_weight="1"
         android:layout_width="0dp"
-        android:layout_height="match_parent">
-
-        <EditText
-            android:id="@+id/to_value"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:hint="0.0"
-            android:inputType="numberDecimal"
-            android:enabled="false"
-            android:textColor="#333"/>
-
-        <Spinner
-            android:id="@+id/to_unit_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@id/to_value"
-            android:layout_marginTop="10dp"/>
-    </RelativeLayout>
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_swap_vert_black_48dp"/>
 
 </LinearLayout>

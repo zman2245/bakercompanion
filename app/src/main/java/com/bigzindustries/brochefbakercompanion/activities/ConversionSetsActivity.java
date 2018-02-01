@@ -37,7 +37,6 @@ public class ConversionSetsActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_conversion_sets);
-        setTitle("Conversion Sets");
 
         conversionSetsList = (ListView)findViewById(R.id.conversion_sets_list);
         addButton = (FloatingActionButton) findViewById(R.id.add_button);
