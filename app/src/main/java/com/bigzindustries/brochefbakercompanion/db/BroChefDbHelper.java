@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class BroChefDbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
-    public static final int DATABASE_VERSION = 5;
+    public static final int DATABASE_VERSION = 6;
     public static final String DATABASE_NAME = "BroChef.db";
     public static final String TABLE_NAME_CONVERSION_SETS = "ConversionSets";
     public static final String TABLE_NAME_CONVERSIONS = "Conversions";
@@ -27,6 +27,7 @@ public class BroChefDbHelper extends SQLiteOpenHelper {
             "CREATE TABLE " + TABLE_NAME_CONVERSION_SETS + " (" +
                     "_id INTEGER PRIMARY KEY," +
                     "name TEXT," +
+                    "notes TEXT," +
                     "priority INTEGER)";
 
     private static final String SQL_DELETE_CONVERSIONS =
