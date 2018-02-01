@@ -10,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.bigzindustries.brochefbakercompanion.R;
 import com.bigzindustries.brochefbakercompanion.db.BroChefContentProvider;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
 public class ConversionController implements AdapterView.OnItemSelectedListener {
 
     EditText fromVal;
-    EditText toVal;
+    TextView toVal;
     Spinner fromUnit;
     Spinner toUnit;
     Spinner ingredient;
@@ -39,20 +40,7 @@ public class ConversionController implements AdapterView.OnItemSelectedListener 
 
         @Override
         public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            updateNumbers(false);
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {}
-    };
-
-    TextWatcher toTextWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            updateNumbers(true);
+            updateNumbers();
         }
 
         @Override
@@ -83,7 +71,7 @@ public class ConversionController implements AdapterView.OnItemSelectedListener 
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        updateNumbers(false);
+        updateNumbers();
     }
 
     @Override
@@ -136,7 +124,6 @@ public class ConversionController implements AdapterView.OnItemSelectedListener 
         fromUnit.setOnItemSelectedListener(null);
         toUnit.setOnItemSelectedListener(null);
         fromVal.removeTextChangedListener(fromTextWatcher);
-        toVal.removeTextChangedListener(toTextWatcher);
 
     }
 
@@ -145,10 +132,9 @@ public class ConversionController implements AdapterView.OnItemSelectedListener 
         fromUnit.setOnItemSelectedListener(this);
         toUnit.setOnItemSelectedListener(this);
         fromVal.addTextChangedListener(fromTextWatcher);
-        toVal.addTextChangedListener(toTextWatcher);
     }
 
-    private void updateNumbers(boolean backwards) {
+    private void updateNumbers() {
         removeAllChangeListeners();
 
         if (ingredient == null) {
@@ -158,11 +144,7 @@ public class ConversionController implements AdapterView.OnItemSelectedListener 
         Double value;
         Double conversionValue;
 
-        if (backwards) {
-            value = getDoubleFromTextWidget(toVal);
-        } else {
-            value = getDoubleFromTextWidget(fromVal);
-        }
+        value = getDoubleFromTextWidget(fromVal);
 
         String ingredientStr = ingredient.getSelectedItem().toString();
         String fromUnitStr = fromUnit.getSelectedItem().toString();
@@ -174,11 +156,7 @@ public class ConversionController implements AdapterView.OnItemSelectedListener 
 
         conversionValue = Conversions.convert(ingredientEnum, fromUnitEnum, toUnitEnum, value);
 
-        if (backwards) {
-            fromVal.setText(conversionValue.toString());
-        } else {
-            toVal.setText(conversionValue.toString());
-        }
+        toVal.setText(conversionValue.toString());
 
         addAllChangeListeners();
     }

@@ -4,22 +4,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp"
     tools:context="com.bigzindustries.brochefbakercompanion.activities.MainActivity">
 
     <TextView
         style="@style/MainHeader"
-        android:text="Quick Convert"/>
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="Quick Convert"
+        android:background="#EEE"/>
 
-    <include layout="@layout/conversion_view"
-        android:layout_height="100dp"
+    <include
+        android:id="@+id/conversion"
+        layout="@layout/conversion_view"
         android:layout_width="match_parent"
-        android:id="@+id/conversion" />
+        android:layout_height="100dp" />
 
     <TextView
         style="@style/MainHeader"
-        android:text="Cheat Sheet" />
+        android:text="Cheat Sheet"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"/>
 
     <include layout="@layout/cheat_sheet" />
 

@@ -6,24 +6,33 @@
     android:orientation="horizontal"
     android:weightSum="12"
     android:padding="10dp"
-    android:background="@color/colorPrimary"
+    android:background="#EEE"
     tools:context="com.bigzindustries.brochefbakercompanion.activities.ConversionSetsActivity">
 
     <RelativeLayout
-        android:id="@+id/middle"
+        android:id="@+id/ingredient_container"
         android:layout_weight="4"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:background="#008000">
+        android:background="#AAA">
+
+        <TextView
+            android:id="@+id/ingredient_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:textSize="16sp"
+            android:textColor="#000"
+            android:text="Ingredient"/>
 
         <Spinner
             android:id="@+id/ingredient_spinner"
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_marginTop="10dp"
-            >
-
-        </Spinner>
+            android:layout_below="@+id/ingredient_label"
+            />
     </RelativeLayout>
 
     <RelativeLayout
@@ -37,17 +46,15 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:hint="0.0"
-            android:inputType="numberDecimal"/>
+            android:inputType="numberDecimal"
+            android:textColor="#000"/>
 
         <Spinner
             android:id="@+id/from_unit_spinner"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_below="@id/from_value"
-            android:layout_marginTop="10dp"
-            >
-
-        </Spinner>
+            android:layout_marginTop="10dp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -61,18 +68,16 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:hint="0.0"
-            android:inputType="numberDecimal"/>
+            android:inputType="numberDecimal"
+            android:enabled="false"
+            android:textColor="#333"/>
 
         <Spinner
             android:id="@+id/to_unit_spinner"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_below="@id/to_value"
-            android:layout_marginTop="10dp"
-            >
-
-        </Spinner>
-
+            android:layout_marginTop="10dp"/>
     </RelativeLayout>
 
 </LinearLayout>
