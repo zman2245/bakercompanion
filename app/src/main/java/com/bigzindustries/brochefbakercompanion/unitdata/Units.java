@@ -13,7 +13,8 @@ public enum Units {
     LITERS("Liters", false, false, 1000),
     CUPS("Cups", false, true, 240f),
     TEASPOONS("Teaspoons", false, true, 4.92892),
-    TABLESPOONS("Tablespoons", false, true, 14.78676);
+    TABLESPOONS("Tablespoons", false, true, 14.78676),
+    FLUID_OUNCES("Fluid Ounces", false, true, 29.5735);
 
     public String name; // display name throughout the app
     public boolean isMass; // if false, Volume
