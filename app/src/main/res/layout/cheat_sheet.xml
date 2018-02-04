@@ -54,7 +54,7 @@
                 android:text="1 Cup AP Flour"/>
             <TextView
                 style="@style/CheatSheetItemTextRightIndented"
-                android:text="142 g, 5 oz"/>
+                android:text="125 g, 4.5 oz"/>
         </RelativeLayout>
         <RelativeLayout
             style="@style/CheatSheetItemGroup">
@@ -81,7 +81,7 @@
                 android:text="1 Cup Sugar"/>
             <TextView
                 style="@style/CheatSheetItemTextRightIndented"
-                android:text="198 g, 7 oz"/>
+                android:text="200 g, 7 oz"/>
         </RelativeLayout>
         <RelativeLayout
             style="@style/CheatSheetItemGroup">
@@ -90,7 +90,7 @@
                 android:text="1 Cup Packed Brown Sugar"/>
             <TextView
                 style="@style/CheatSheetItemTextRightIndented"
-                android:text="198 g, 7 oz"/>
+                android:text="200 g, 7 oz"/>
         </RelativeLayout>
         <RelativeLayout
             style="@style/CheatSheetItemGroup">
@@ -99,7 +99,7 @@
                 android:text="1 Cup Powdered Sugar"/>
             <TextView
                 style="@style/CheatSheetItemTextRightIndented"
-                android:text="113 g, 4 oz"/>
+                android:text="112 g, 4 oz"/>
         </RelativeLayout>
         <RelativeLayout
             style="@style/CheatSheetItemGroup">
@@ -108,7 +108,7 @@
                 android:text="1 Cup Cocoa Powder"/>
             <TextView
                 style="@style/CheatSheetItemTextRightIndented"
-                android:text="85 g, 3 oz"/>
+                android:text="125 g, 4.5 oz"/>
         </RelativeLayout>
         <RelativeLayout
             style="@style/CheatSheetItemGroup">

@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -85,6 +86,9 @@ public class ConversionController implements AdapterView.OnItemSelectedListener 
 
             updateNumbers();
         });
+
+        int pos = ((ArrayAdapter)toUnit.getAdapter()).getPosition(Units.CUPS);
+        toUnit.setSelection(pos);
     }
 
     @Override
