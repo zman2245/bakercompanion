@@ -23,15 +23,23 @@ public class ConversionsAdapter extends CursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
+        double toVal = cursor.getDouble(cursor.getColumnIndex("toValue"));
+        double fromVal = cursor.getDouble(cursor.getColumnIndex("fromValue"));
+
         ((TextView)view.findViewById(R.id.ingredient_value)).setText(cursor.getString(cursor.getColumnIndex("ingredient")).toLowerCase());
         ((TextView)view.findViewById(R.id.from_value)).setText(
-                getMeasurementString(cursor.getDouble(cursor.getColumnIndex("fromValue")),
+                getMeasurementString(fromVal,
                         cursor.getString(cursor.getColumnIndex("fromUnit")))
         );
         ((TextView)view.findViewById(R.id.to_value)).setText(
-                getMeasurementString(cursor.getDouble(cursor.getColumnIndex("toValue")),
-                        cursor.getString(cursor.getColumnIndex("toUnit")))
+                getMeasurementString(toVal, cursor.getString(cursor.getColumnIndex("toUnit")))
         );
+
+        if (toVal <= 0.0) {
+            // there's no conversion really, so hide the conversion-relevant UI elements
+            view.findViewById(R.id.arrow).setVisibility(View.INVISIBLE);
+            view.findViewById(R.id.to_value).setVisibility(View.INVISIBLE);
+        }
     }
 
     private String getMeasurementString(double val, String unit) {

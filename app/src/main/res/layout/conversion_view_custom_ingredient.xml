@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="135dp"
+    android:orientation="vertical"
+    android:padding="10dp"
+    android:background="#EEE"
+    tools:context="com.bigzindustries.brochefbakercompanion.activities.ConversionSetsActivity">
+
+    <RelativeLayout
+        android:id="@+id/ingredient_container"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:padding="5dp"
+        android:background="#AAA">
+
+        <TextView
+            android:id="@+id/ingredient_label"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:textSize="16sp"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:text="Ingredient" />
+
+        <EditText
+            android:id="@+id/custom_ingredient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/ingredient_label"
+            android:layout_marginLeft="15dp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/from_and_to"
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:layout_toLeftOf="@id/swap"
+        android:orientation="vertical"
+        android:weightSum="2">
+
+        <RelativeLayout
+            android:id="@+id/from"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <EditText
+                android:id="@+id/from_value"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:hint="0.0"
+                android:inputType="numberDecimal"
+                android:textColor="#000"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <Spinner
+                android:id="@+id/from_unit_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/from_value"
+                android:layout_marginTop="10dp" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>
