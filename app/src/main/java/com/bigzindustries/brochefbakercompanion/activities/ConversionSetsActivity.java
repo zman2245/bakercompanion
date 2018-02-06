@@ -70,20 +70,20 @@ public class ConversionSetsActivity extends KeepScreenOnActivity
     }
 
     @Override
-    public Loader onCreateLoader(int id, Bundle args) {
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         return new CursorLoader(this, BroChefContentProvider.CONVERSION_SETS_URI,
                 null, null, null, null);
     }
 
     @Override
-    public void onLoadFinished(Loader loader, Cursor cursor) {
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         cursor.moveToFirst();
         ConversionSetsAdapter adapter = new ConversionSetsAdapter(this, cursor);
         conversionSetsList.setAdapter(adapter);
     }
 
     @Override
-    public void onLoaderReset(Loader loader) {
+    public void onLoaderReset(Loader<Cursor> loader) {
 
     }
 

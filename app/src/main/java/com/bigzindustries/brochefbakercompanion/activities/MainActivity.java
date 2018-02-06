@@ -38,13 +38,21 @@ public class MainActivity extends KeepScreenOnActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
+
         switch (item.getItemId()) {
             case R.id.menu_item_my_recipes:
-                Intent intent = new Intent(this, ConversionSetsActivity.class);
+                intent = new Intent(this, ConversionSetsActivity.class);
                 startActivity(intent);
                 return true;
-        }
 
-        return super.onOptionsItemSelected(item);
+            case R.id.menu_item_protips:
+                intent = new Intent(this, ProTipsActivity.class);
+                startActivity(intent);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

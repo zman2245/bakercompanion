@@ -100,7 +100,7 @@ public class ConversionsActivity extends KeepScreenOnActivity
     }
 
     @Override
-    public Loader onCreateLoader(int id, Bundle args) {
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         return new CursorLoader(this,
                 BroChefContentProvider.CONVERSIONS_URI,
                 null,
@@ -110,14 +110,14 @@ public class ConversionsActivity extends KeepScreenOnActivity
     }
 
     @Override
-    public void onLoadFinished(Loader loader, Cursor cursor) {
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         cursor.moveToFirst();
         ConversionsAdapter adapter = new ConversionsAdapter(this, cursor);
         conversionsList.setAdapter(adapter);
     }
 
     @Override
-    public void onLoaderReset(Loader loader) {
+    public void onLoaderReset(Loader<Cursor> loader) {
 
     }
 

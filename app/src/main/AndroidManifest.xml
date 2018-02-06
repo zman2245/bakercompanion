@@ -35,6 +35,11 @@
         <activity android:name=".activities.CheatSheetActivity"
             android:parentActivityName="com.bigzindustries.brochefbakercompanion.activities.MainActivity">
         </activity>
+
+        <activity android:name=".activities.ProTipsActivity"
+            android:label="Pro Tips"
+            android:parentActivityName="com.bigzindustries.brochefbakercompanion.activities.MainActivity">
+        </activity>
     </application>
 
 </manifest>

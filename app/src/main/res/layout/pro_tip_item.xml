@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:orientation="vertical"
+    tools:context="com.bigzindustries.brochefbakercompanion.activities.ProTipsActivity">
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/MainHeader"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:text="ProTip A"
+        />
+
+    <TextView
+        android:id="@+id/paragraph"
+        style="@style/CheatSheetItemGroup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:text="This is an awesome tip for baking"
+        />
+
+</LinearLayout>

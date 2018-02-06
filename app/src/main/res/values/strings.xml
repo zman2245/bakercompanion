@@ -3,4 +3,28 @@
 
     <string name="etsy_menu_title">Shop for Baking Kits</string>
     <string name="etsy_link">https://www.etsy.com/shop/BroChef</string>
+
+    <string-array name="protip_titles">
+        <item>Softening Butter</item>
+        <item>Browning Butter</item>
+        <item>Using Real or Artificial Vanilla</item>
+        <item>How Do I Know When My Cake Is Done?</item>
+    </string-array>
+
+    <string-array name="protip_paragraphs">
+        <item>It is best to take the butter out of the fridge and let it sit for an hour before use. Alternatively, you can microwave for 10 seconds at a time. Be careful to avoid melting. You only want the butter softened for easy mixing, not cooked!</item>
+
+        <item>The goal is to cook the butter until you see the separated milk solids turn brown. Watch closely to make sure you don’t burn it.
+
+In a medium sauce pan, melt the butter slowly over low heat.
+
+Once the butter is liquified, turn the heat up to medium. You\’ll notice the butter going through stages. It will start crackling and popping. After 5-7 minutes, a foam will form on top - watch closely because it\’s almost done! With a spatula or spoon, gently stir the butter and watch for brown residue (the milk solids).
+
+Once you start seeing brown, you will also notice a nutty smell - take the pan off the heat, stir for a few more seconds, and transfer to a heat-safe bowl.</item>
+
+        <item>As a rule of thumb, if the vanilla is in something going into the oven, like a cake or pie, you can use artificial vanilla. Even professional bakers and taste-testers can\'t tell the difference. But if you are making something, like a buttercream frosting, that is being mixed together and then served, you must use the real thing.</item>
+
+        <item>Carefully remove the cake from the oven. Test it by sticking a Toothpick into the center and pulling it out. If it comes out clean or with just a few crumbs stuck to the side, the cake is done. If there\’s batter on the toothpick, cook longer. Try Baking/Testing in 2-5 minute increments until the cake is done.</item>
+
+    </string-array>
 </resources>
