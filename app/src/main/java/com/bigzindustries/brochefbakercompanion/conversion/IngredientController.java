@@ -1,5 +1,6 @@
 package com.bigzindustries.brochefbakercompanion.conversion;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,17 +20,17 @@ public class IngredientController {
     View conversionView;
     View customView;
 
-    public IngredientController(Context context, FrameLayout container) {
+    public IngredientController(Activity activity, FrameLayout container) {
         LayoutInflater inflater =
-                (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         this.container = container;
 
         this.conversionView = inflater.inflate(R.layout.conversion_view_v2, null);
         this.customView = inflater.inflate(R.layout.conversion_view_custom_ingredient, null);
 
-        conversionController = new ConversionController(context, conversionView);
-        customController = new CustomIngredientController(context, customView);
+        conversionController = new ConversionController(activity, conversionView);
+        customController = new CustomIngredientController(activity, customView);
 
         this.container.addView(conversionView);
         this.container.addView(customView);
@@ -39,10 +40,12 @@ public class IngredientController {
 
     public void showConversion() {
         container.bringChildToFront(conversionView);
+        conversionController.handleFocus();
     }
 
     public void showCustom() {
         container.bringChildToFront(customView);
+        customController.handleFocus();
     }
 
     public boolean isCustomShowing() {

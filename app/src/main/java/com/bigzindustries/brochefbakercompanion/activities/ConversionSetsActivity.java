@@ -9,7 +9,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,7 +24,7 @@ import com.bigzindustries.brochefbakercompanion.db.BroChefDbHelper;
 /**
  * Displays and allows management of conversion sets
  */
-public class ConversionSetsActivity extends AppCompatActivity
+public class ConversionSetsActivity extends KeepScreenOnActivity
         implements LoaderManager.LoaderCallbacks<Cursor>, AdapterView.OnItemClickListener {
 
     BroChefDbHelper dbHelper;

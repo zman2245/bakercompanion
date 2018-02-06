@@ -1,9 +1,11 @@
 package com.bigzindustries.brochefbakercompanion.conversion;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -21,18 +23,20 @@ import java.util.ArrayList;
  */
 public class CustomIngredientController {
 
+    Activity activity;
     EditText fromVal;
     Spinner fromUnit;
     EditText customIngredient;
 
-    public CustomIngredientController(Context context, View view) {
+    public CustomIngredientController(Activity activity, View view) {
         ArrayList<Units> units = getUnits();
 
+        this.activity = activity;
         customIngredient = view.findViewById(R.id.custom_ingredient);
         fromUnit = view.findViewById(R.id.from_unit_spinner);
         fromVal = view.findViewById(R.id.from_value);
 
-        UnitSpinnerAdapter unitAdapter = new UnitSpinnerAdapter(context, units);
+        UnitSpinnerAdapter unitAdapter = new UnitSpinnerAdapter(activity, units);
         fromUnit.setAdapter(unitAdapter);
     }
 
@@ -49,6 +53,16 @@ public class CustomIngredientController {
 
             context.getContentResolver().insert(BroChefContentProvider.CONVERSIONS_URI, values);
         }).start();
+    }
+
+    public void handleFocus() {
+        try {
+            customIngredient.requestFocus();
+            InputMethodManager imm = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(customIngredient, InputMethodManager.SHOW_IMPLICIT);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private Double getDoubleFromTextWidget(EditText text) {

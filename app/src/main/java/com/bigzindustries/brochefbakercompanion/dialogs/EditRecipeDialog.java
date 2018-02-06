@@ -28,6 +28,7 @@ public class EditRecipeDialog extends DialogFragment {
         }
 
         final long setId = getArguments().getLong(ConversionsActivity.PARAM_CONV_SET_ID);
+        final boolean isNewRecipe = setId <= 0;
         final String recipeName = getArguments().getString(ConversionsActivity.PARAM_CONV_SET_NAME, "");
         final String recipeNotes = getArguments().getString(ConversionsActivity.PARAM_CONV_SET_NOTES, "");
 
@@ -57,7 +58,7 @@ public class EditRecipeDialog extends DialogFragment {
                     ContentValues setValues =
                             BroChefDbHelper.getValsForConversionSetInsert(newName, newNotes);
 
-                    if (setId <= 0) {
+                    if (isNewRecipe) {
                         Uri setUri = getActivity().getContentResolver()
                                 .insert(BroChefContentProvider.CONVERSION_SETS_URI, setValues);
                         long newSetId = Long.valueOf(setUri.getLastPathSegment());
@@ -73,7 +74,13 @@ public class EditRecipeDialog extends DialogFragment {
                         ((EditRecipeDialogFinished)getActivity()).onRecipeChanged(false, setId, newName, newNotes);
                     }
                 })
-                .setNegativeButton("Cancel", (dialog, id) -> dismiss());
+                .setNegativeButton("Cancel", (dialog, id) -> {
+                    dismiss();
+
+                    if (isNewRecipe) {
+                        ((EditRecipeDialogFinished)getActivity()).onCanceledNewEntry();
+                    }
+                });
 
         // Create the AlertDialog object and return it
         return builder.create();
@@ -85,14 +92,5 @@ public class EditRecipeDialog extends DialogFragment {
         getDialog().setCanceledOnTouchOutside(false);
 
         return super.onCreateView(inflater, container, savedInstanceState);
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        boolean enableCancel = getArguments().getLong(ConversionsActivity.PARAM_CONV_SET_ID) > 0;
-
-        ((AlertDialog)getDialog()).getButton(AlertDialog.BUTTON_NEGATIVE).setEnabled(enableCancel);
     }
 }

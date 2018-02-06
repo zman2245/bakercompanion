@@ -8,7 +8,6 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,7 +29,7 @@ import com.bigzindustries.brochefbakercompanion.dialogs.NewConversionDialog;
  *
  * If no set id is passed, assumed to be a new set in the DB
  */
-public class ConversionsActivity extends AppCompatActivity
+public class ConversionsActivity extends KeepScreenOnActivity
         implements LoaderManager.LoaderCallbacks<Cursor>, EditRecipeDialogFinished {
 
     public static final String PARAM_CONV_SET_ID = "conversionSetId";
@@ -134,6 +133,12 @@ public class ConversionsActivity extends AppCompatActivity
             getSupportLoaderManager().initLoader(1, null, this);
             addButton.setEnabled(true);
         }
+    }
+
+    @Override
+    public void onCanceledNewEntry() {
+        // the user decided not to create a new recipe after all
+        finish();
     }
 
     @Override

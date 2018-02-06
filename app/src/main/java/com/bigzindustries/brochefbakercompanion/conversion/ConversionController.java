@@ -1,11 +1,13 @@
 package com.bigzindustries.brochefbakercompanion.conversion;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -28,6 +30,7 @@ import java.util.ArrayList;
  */
 public class ConversionController implements AdapterView.OnItemSelectedListener {
 
+    Activity activity;
     EditText fromVal;
     TextView toVal;
     Spinner fromUnit;
@@ -48,10 +51,11 @@ public class ConversionController implements AdapterView.OnItemSelectedListener 
         public void afterTextChanged(Editable editable) {}
     };
 
-    public ConversionController(Context context, View view) {
+    public ConversionController(Activity activity, View view) {
         ArrayList<Ingredients> ingredients = getIngredients();
         ArrayList<Units> units = getUnits();
 
+        this.activity = activity;
         ingredient = view.findViewById(R.id.ingredient_spinner);
         fromUnit = view.findViewById(R.id.from_unit_spinner);
         toUnit = view.findViewById(R.id.to_unit_spinner);
@@ -60,12 +64,12 @@ public class ConversionController implements AdapterView.OnItemSelectedListener 
         swap = view.findViewById(R.id.swap);
 
         IngredientSpinnerAdapter ingredientsAdapter =
-                new IngredientSpinnerAdapter(context, ingredients);
+                new IngredientSpinnerAdapter(activity, ingredients);
         ingredient.setAdapter(ingredientsAdapter);
 
-        UnitSpinnerAdapter unitAdapter = new UnitSpinnerAdapter(context, units);
+        UnitSpinnerAdapter unitAdapter = new UnitSpinnerAdapter(activity, units);
         fromUnit.setAdapter(unitAdapter);
-        unitAdapter = new UnitSpinnerAdapter(context, units);
+        unitAdapter = new UnitSpinnerAdapter(activity, units);
         toUnit.setAdapter(unitAdapter);
 
         addAllChangeListeners();
@@ -99,6 +103,16 @@ public class ConversionController implements AdapterView.OnItemSelectedListener 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+
+    public void handleFocus() {
+        try {
+            fromVal.requestFocus();
+            InputMethodManager imm = (InputMethodManager)activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(fromVal, InputMethodManager.SHOW_IMPLICIT);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void addConversionToDb(Context context, long setId) {

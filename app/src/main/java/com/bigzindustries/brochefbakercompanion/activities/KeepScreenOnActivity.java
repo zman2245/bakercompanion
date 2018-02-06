@@ -1,5 +1,7 @@
 package com.bigzindustries.brochefbakercompanion.activities;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
@@ -34,10 +36,15 @@ public class KeepScreenOnActivity extends AppCompatActivity {
         Switch switchAB = menu.findItem(R.id.menu_item_lock_screen_toggle)
                 .getActionView().findViewById(R.id.toggle);
 
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        switchAB.setChecked(true);
+        boolean keepScreenOn = getPrefKeepScreenOn();
+        switchAB.setChecked(keepScreenOn);
+        if (keepScreenOn) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }
 
         switchAB.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            setPrefKeepScreenOn(isChecked);
+
             if (isChecked) {
                 getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                 Toast.makeText(getApplication(), "Screen will stay on so you can easily see conversions while baking", Toast.LENGTH_SHORT)
@@ -67,5 +74,15 @@ public class KeepScreenOnActivity extends AppCompatActivity {
         }
 
         return false;
+    }
+
+    private boolean getPrefKeepScreenOn() {
+        SharedPreferences prefs = getSharedPreferences("BROCHEF", Context.MODE_PRIVATE);
+        return prefs.getBoolean("KEEP_SCREEN_ON", true);
+    }
+
+    private void setPrefKeepScreenOn(boolean keepOn) {
+        SharedPreferences prefs = getSharedPreferences("BROCHEF", Context.MODE_PRIVATE);
+        prefs.edit().putBoolean("KEEP_SCREEN_ON", keepOn).commit();
     }
 }
