@@ -182,7 +182,7 @@ public class ConversionController implements AdapterView.OnItemSelectedListener 
 
         conversionValue = Conversions.convert(ingredientEnum, fromUnitEnum, toUnitEnum, value);
 
-        toVal.setText(conversionValue.toString());
+        toVal.setText(String.format("%.2f", conversionValue));
 
         addAllChangeListeners();
     }
