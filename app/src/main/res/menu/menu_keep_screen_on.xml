@@ -10,4 +10,11 @@
         android:title="">
     </item>
 
+    <item
+        android:id="@+id/menu_item_etsy_link"
+        android:enabled="true"
+        app:showAsAction="never"
+        android:title="@string/etsy_menu_title">
+    </item>
+
 </menu>

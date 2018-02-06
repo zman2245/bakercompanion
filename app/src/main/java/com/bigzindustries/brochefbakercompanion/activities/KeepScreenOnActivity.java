@@ -1,7 +1,10 @@
 package com.bigzindustries.brochefbakercompanion.activities;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.Nullable;
@@ -71,9 +74,21 @@ public class KeepScreenOnActivity extends AppCompatActivity {
                 }
 
                 return true;
-        }
+            case R.id.menu_item_etsy_link:
+                try {
+                    String url = getString(R.string.etsy_link);
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(browserIntent);
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(this, "No application can handle this request."
+                            + " Please install a webbrowser",  Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
+                }
+                return true;
 
-        return false;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private boolean getPrefKeepScreenOn() {

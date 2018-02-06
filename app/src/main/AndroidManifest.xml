@@ -14,7 +14,7 @@
             android:authorities="com.bigzindustries.brochefbakercompanion.provider"/>
 
         <activity android:name=".activities.MainActivity"
-            android:label="Baking Tools"
+            android:label="@string/app_name"
             android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
