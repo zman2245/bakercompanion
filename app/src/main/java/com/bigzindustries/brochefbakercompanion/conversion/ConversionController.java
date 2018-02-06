@@ -91,7 +91,7 @@ public class ConversionController implements AdapterView.OnItemSelectedListener 
             updateNumbers();
         });
 
-        int pos = ((ArrayAdapter)toUnit.getAdapter()).getPosition(Units.CUPS);
+        int pos = ((ArrayAdapter<Units>)toUnit.getAdapter()).getPosition(Units.CUPS);
         toUnit.setSelection(pos);
     }
 

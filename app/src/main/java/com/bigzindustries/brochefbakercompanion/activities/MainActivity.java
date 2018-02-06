@@ -46,10 +46,10 @@ public class MainActivity extends KeepScreenOnActivity {
                 startActivity(intent);
                 return true;
 
-            case R.id.menu_item_protips:
-                intent = new Intent(this, ProTipsActivity.class);
-                startActivity(intent);
-                return true;
+//            case R.id.menu_item_protips:
+//                intent = new Intent(this, ProTipsActivity.class);
+//                startActivity(intent);
+//                return true;
 
             default:
                 return super.onOptionsItemSelected(item);
