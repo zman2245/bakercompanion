@@ -13,8 +13,6 @@ import com.bigzindustries.brochefbakercompanion.R;
 import com.bigzindustries.brochefbakercompanion.unitdata.Ingredients;
 import com.bigzindustries.brochefbakercompanion.unitdata.Units;
 
-import org.w3c.dom.Text;
-
 public class ConversionsAdapter extends CursorAdapter {
 
     public ConversionsAdapter(Context context, Cursor cursor) {
