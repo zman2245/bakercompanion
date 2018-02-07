@@ -27,4 +27,8 @@ public enum Units {
         this.isStandard = isStandard;
         this.toCommonFactor = toCommonFactor;
     }
+
+    public String getName() {
+        return name;
+    }
 }

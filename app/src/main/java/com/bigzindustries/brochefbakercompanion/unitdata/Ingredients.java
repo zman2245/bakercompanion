@@ -29,4 +29,8 @@ public enum Ingredients {
         this.massToVolumeFactor = massToVolumeFactor;
         this.isStandard = isStandard;
     }
+
+    public String getName() {
+        return name;
+    }
 }

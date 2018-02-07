@@ -8,7 +8,7 @@
     <TextView
         android:id="@+id/notes"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="90dp"
         android:padding="10dp"
         android:hint="Tap the edit button to add notes to your recipe"
         android:textColor="#161616"/>
