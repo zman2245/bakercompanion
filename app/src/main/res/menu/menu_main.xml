@@ -10,10 +10,10 @@
         android:title="Recipes">
     </item>
 
-    <!--<item-->
-        <!--android:id="@+id/menu_item_protips"-->
-        <!--android:enabled="true"-->
-        <!--app:showAsAction="never"-->
-        <!--android:title="Baking Pro Tips">-->
-    <!--</item>-->
+    <item
+        android:id="@+id/menu_item_protips"
+        android:enabled="true"
+        app:showAsAction="never"
+        android:title="Baking Pro Tips">
+    </item>
 </menu>

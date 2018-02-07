@@ -9,6 +9,11 @@
         <item>Browning Butter</item>
         <item>Using Real or Artificial Vanilla</item>
         <item>How Do I Know When My Cake Is Done?</item>
+        <item>How Do I Store a Cake or Cupcakes without Messing Up the Frosting?</item>
+        <item>Why is mixing cookie dough too much bad?</item>
+        <item>Why is chilling cookie dough beneficial?</item>
+        <item>Dry vs Fresh Herbs</item>
+        <item>More to come, stay tuned...</item>
     </string-array>
 
     <string-array name="protip_paragraphs">
@@ -26,5 +31,14 @@ Once you start seeing brown, you will also notice a nutty smell - take the pan o
 
         <item>Carefully remove the cake from the oven. Test it by sticking a Toothpick into the center and pulling it out. If it comes out clean or with just a few crumbs stuck to the side, the cake is done. If there\’s batter on the toothpick, cook longer. Try Baking/Testing in 2-5 minute increments until the cake is done.</item>
 
+        <item>Cover the cake with aluminum foil. You can avoid contact between the foil and the frosting by placing 6-8 toothpicks uniformly around the edges of the cake before covering. This will help keep the foil up and off of the frosting.</item>
+
+        <item>Mixing develops the flour\’s proteins. These proteins are essential to providing structure to many baked goods. For example, kneading bread dough develops proteins so that a baked loaf has structure and rises properly. Usually, in cookie recipes, just mixing the ingredients together will provide enough protein development. Over-mixing can result in tough or overly-chewy cookies.</item>
+
+        <item>Chilling the dough will result in a less flat and more flavorful cookie. While chilling, sugars have more time to absorb liquids in the dough and fats cool down. Less liquid and more slowly-melting fats result in less cookie spread during the bake. In addition, dough gradually dries out while chilling, concentrating flavors - think a watered-down cocktail vs a potent one.</item>
+
+        <item>Dry herbs are more potent. It\'s usually OK to substitute one type of herb for the other, but you have to adjust the amounts. Divide the measurement by three when substituting dry ingredients for fresh ingredients. For example, if a recipe calls for 1 Tablespoon (equal to 3 teaspoons) of fresh basil, substitute only 1 teaspoon of dry basil.</item>
+
+        <item></item>
     </string-array>
 </resources>
