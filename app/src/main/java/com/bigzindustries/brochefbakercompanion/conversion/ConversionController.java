@@ -91,6 +91,12 @@ public class ConversionController implements AdapterView.OnItemSelectedListener 
             updateNumbers();
         });
 
+        fromVal.setOnClickListener(v -> {
+            // causes "select all on focus" to work just when user taps
+            fromVal.clearFocus();
+            fromVal.requestFocus();
+        });
+
         int pos = ((ArrayAdapter<Units>)toUnit.getAdapter()).getPosition(Units.CUPS);
         toUnit.setSelection(pos);
     }

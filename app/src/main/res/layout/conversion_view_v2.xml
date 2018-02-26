@@ -65,6 +65,7 @@
                     android:id="@+id/from_value"
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
+                    android:selectAllOnFocus="true"
                     android:hint="0.0"
                     android:inputType="numberDecimal"
                     android:textColor="#000"/>

@@ -4,7 +4,7 @@ package com.bigzindustries.brochefbakercompanion.unitdata;
  * The common units are Grams for mass; Milliliters for volume
  */
 public enum Units {
-    GRAMS("Gram", true, true, 1),
+    GRAMS("Grams", true, true, 1),
     KILOGRAMS("Kilograms", true, false, 1000),
     OUNCES("Ounces", true, true, 28.3495),
     POUNDS("Pounds", true, false, 453.592),
