@@ -59,4 +59,9 @@
     <style name="CheatSheetItemTextRightIndented" parent="CheatSheetItemTextRight">
         <item name="android:paddingRight">50dp</item>
     </style>
+
+    <style name="mybutton.text" parent="android:Theme.DeviceDefault">
+        <item name="textAllCaps">false</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
 </resources>
