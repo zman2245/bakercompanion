@@ -26,14 +26,26 @@ public class Parser {
         transformChain.add(new IngredientPhraseTransform());
     }
 
-
     public RecipeResults parse(@NonNull String input) {
         String[] lines = input.split("\n");
         IngredientResults ingredient;
+        String subheading = null;
         List<IngredientResults> ingredients = new ArrayList<>();
 
         for (String line : lines) {
-            ingredient = parseLine(line);
+            ingredient = new IngredientResults();
+            String newSubheading = checkParseSubheading(line);
+            if (newSubheading != null) {
+                // this line is just a sub-heading, track it and continue to next line
+                subheading = newSubheading;
+                continue;
+            }
+
+            if (subheading != null) {
+                ingredient.setNotes("(" + subheading + ")");
+            }
+
+            ingredient = parseLine(ingredient, line);
             ingredients.add(ingredient);
         }
 
@@ -43,38 +55,40 @@ public class Parser {
 
     @VisibleForTesting
     public IngredientResults parseLine(String inputLine) {
-        IngredientResults results = new IngredientResults();
+        IngredientResults ingredient = new IngredientResults();
+        return parseLine(ingredient, inputLine);
+    }
+
+    private IngredientResults parseLine(IngredientResults ingredient, String inputLine) {
+        ingredient.setOriginalLine(inputLine);
         String transformedInput = applyTransformChain(inputLine);
 
         String[] tokens = transformedInput.split(" ");
 
         for (String token : tokens) {
-            Object vocabWord = Vocab.wordsMap.get(token);
-            if (vocabWord == null) {
-                // not a vocab word
-                double num;
-                try {
-                    num = Double.parseDouble(token);
-                    results.setAmount(num);
-                } catch (NumberFormatException nfe) {
-                    // it's not a number either. TODO: anything else to try?
-                    continue;
-                }
-            } else if (vocabWord.getClass() == RecipeUnits.class) {
-                results.setUnit((RecipeUnits)vocabWord);
-            } else if (vocabWord.getClass() == RecipeIngredients.class) {
-                results.setIngredient((RecipeIngredients)vocabWord);
-            }
+            parseToken(ingredient, token);
         }
 
-        return results;
+        return ingredient;
     }
 
-//    public  parseToken(String token) {
-//        Object result = Vocab.wordsMap.get(token);
-//
-//        return
-//    }
+    public void parseToken(IngredientResults results, String token) {
+        Object vocabWord = Vocab.wordsMap.get(token);
+        if (vocabWord == null) {
+            // not a vocab word
+            double num;
+            try {
+                num = Double.parseDouble(token);
+                results.setAmount(num);
+            } catch (NumberFormatException nfe) {
+                // it's not a number either. TODO: anything else to try?
+            }
+        } else if (vocabWord.getClass() == RecipeUnits.class) {
+            results.setUnit((RecipeUnits)vocabWord);
+        } else if (vocabWord.getClass() == RecipeIngredients.class) {
+            results.setIngredient((RecipeIngredients)vocabWord);
+        }
+    }
 
     @VisibleForTesting
     public String applyTransformChain(String input) {
@@ -85,5 +99,14 @@ public class Parser {
         }
 
         return result;
+    }
+
+    // food network uses them, maybe others
+    public String checkParseSubheading(String inputLine) {
+        if (Vocab.SUBHEADING_KEYWORDS.contains(inputLine.toLowerCase())) {
+            return inputLine.replace(":", "");
+        }
+
+        return null;
     }
 }

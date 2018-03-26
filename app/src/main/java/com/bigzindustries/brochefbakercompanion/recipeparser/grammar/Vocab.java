@@ -4,6 +4,7 @@ import com.bigzindustries.brochefbakercompanion.recipeparser.models.RecipeIngred
 import com.bigzindustries.brochefbakercompanion.recipeparser.models.RecipeUnits;
 
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * TODO: need to have transforms that turn some terms, especially multi-word phrases into
@@ -22,6 +23,15 @@ public class Vocab {
     public static String TRANS_KEY_SEMISWEET_CHOC = "semichocolate";
     public static String TRANS_KEY_HEAVY_CREAM = "heavycream";
     public static String TRANS_KEY_YOGURT = "yogurt";
+    public static String TRANS_KEY_GRAHAM_CRUMBS = "grahamcrumbs";
+    public static String TRANS_KEY_CREAM_CHEESE = "creamcheese";
+    public static String TRANS_KEY_SOUR_CREAM = "sourcream";
+
+    public static HashSet<String> SUBHEADING_KEYWORDS = new HashSet<>();
+    static {
+        SUBHEADING_KEYWORDS.add("crust:");
+        SUBHEADING_KEYWORDS.add("filling:");
+    }
 
     public static HashMap<String, Object> wordsMap = new HashMap<>();
     static {
@@ -57,6 +67,10 @@ public class Vocab {
         wordsMap.put(TRANS_KEY_HEAVY_CREAM, RecipeIngredients.HEAVY_CREAM);
         wordsMap.put("milk", RecipeIngredients.MILK);
         wordsMap.put(TRANS_KEY_YOGURT, RecipeIngredients.YOGURT);
+
+        wordsMap.put(TRANS_KEY_GRAHAM_CRUMBS, RecipeIngredients.GRAHAM_CRUMBS);
+        wordsMap.put(TRANS_KEY_CREAM_CHEESE, RecipeIngredients.CREAM_CHEESE);
+        wordsMap.put(TRANS_KEY_SOUR_CREAM, RecipeIngredients.SOUR_CREAM);
     }
 
     // TODO: regex for matching numbers and units without spacing; e.g. 8oz

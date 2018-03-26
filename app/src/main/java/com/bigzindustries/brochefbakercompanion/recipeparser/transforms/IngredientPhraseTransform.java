@@ -34,6 +34,10 @@ public class IngredientPhraseTransform implements RecipeTransform {
 
         result = result.replace("plain yogurt", Vocab.TRANS_KEY_YOGURT);
 
+        result = result.replace("graham cracker crumbs", Vocab.TRANS_KEY_GRAHAM_CRUMBS);
+        result = result.replace("cream cheese", Vocab.TRANS_KEY_CREAM_CHEESE);
+        result = result.replace("sour cream", Vocab.TRANS_KEY_SOUR_CREAM);
+
         return result;
     }
 }

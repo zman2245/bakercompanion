@@ -15,7 +15,10 @@ public enum RecipeIngredients {
     SEMISWEET_CHOCOLATE("Semi-sweet Chocolate"),
     HEAVY_CREAM("Heavy Cream"),
     MILK("Milk"),
-    YOGURT("Plain Yogurt");
+    YOGURT("Plain Yogurt"),
+    GRAHAM_CRUMBS("Graham Cracker Crumbs"),
+    CREAM_CHEESE("Cream Cheese"),
+    SOUR_CREAM("Sour Cream");
 
     public String name;
 

@@ -8,6 +8,8 @@ public class IngredientResults {
     int alternateAmount;
     String alternateUnit;
 
+    String originalLine;
+
     public RecipeIngredients getIngredient() {
         return ingredient;
     }
@@ -54,5 +56,13 @@ public class IngredientResults {
 
     public void setAlternateUnit(String alternateUnit) {
         this.alternateUnit = alternateUnit;
+    }
+
+    public String getOriginalLine() {
+        return originalLine;
+    }
+
+    public void setOriginalLine(String originalLine) {
+        this.originalLine = originalLine;
     }
 }
