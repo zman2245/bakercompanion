@@ -10,6 +10,7 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +25,7 @@ import com.bigzindustries.brochefbakercompanion.db.BroChefDbHelper;
 /**
  * Displays and allows management of conversion sets
  */
-public class ConversionSetsActivity extends KeepScreenOnActivity
+public class RecipesActivity extends KeepScreenOnActivity
         implements LoaderManager.LoaderCallbacks<Cursor>, AdapterView.OnItemClickListener {
 
     BroChefDbHelper dbHelper;
@@ -59,8 +60,22 @@ public class ConversionSetsActivity extends KeepScreenOnActivity
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_recipes, menu);
+
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case R.id.menu_item_paste_recipe:
+                startActivity(new Intent(this, PasteInActivity.class));
+                break;
+
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;

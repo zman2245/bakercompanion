@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="10dp"
     android:background="#EEE"
-    tools:context="com.bigzindustries.brochefbakercompanion.activities.ConversionSetsActivity">
+    tools:context="com.bigzindustries.brochefbakercompanion.activities.RecipesActivity">
 
     <RelativeLayout
         android:id="@+id/ingredient_container"

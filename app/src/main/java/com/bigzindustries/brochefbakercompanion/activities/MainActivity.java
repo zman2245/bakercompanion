@@ -42,7 +42,7 @@ public class MainActivity extends KeepScreenOnActivity {
 
         switch (item.getItemId()) {
             case R.id.menu_item_my_recipes:
-                intent = new Intent(this, ConversionSetsActivity.class);
+                intent = new Intent(this, RecipesActivity.class);
                 startActivity(intent);
                 return true;
 

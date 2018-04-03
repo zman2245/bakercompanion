@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context="com.bigzindustries.brochefbakercompanion.activities.MainActivity">
+
+    <!-- TODO: create a little helper bubble to give more info on this feature -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#f00"
+        android:text="Paste in the line-by-line ingredients below, and choose a conversion method."/>
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Volume (cups, tsp, etc.)"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mass (grams)"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="None"/>
+
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/ingredientsInput"
+        android:layout_height="500dp"
+        android:layout_width="match_parent"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Paste in the directions below. They will become the Notes for your recipe."/>
+
+    <EditText
+        android:id="@+id/directionsInput"
+        android:layout_height="300dp"
+        android:layout_width="match_parent"
+        />
+
+</LinearLayout>
