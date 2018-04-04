@@ -1,13 +1,17 @@
 package com.bigzindustries.brochefbakercompanion.activities;
 
+import android.content.Intent;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.app.NavUtils;
+import android.support.v4.app.ShareCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,6 +27,7 @@ import com.bigzindustries.brochefbakercompanion.db.BroChefContentProvider;
 import com.bigzindustries.brochefbakercompanion.dialogs.EditRecipeDialogFinished;
 import com.bigzindustries.brochefbakercompanion.dialogs.EditRecipeDialog;
 import com.bigzindustries.brochefbakercompanion.dialogs.NewConversionDialog;
+import com.bigzindustries.brochefbakercompanion.unitdata.Utility;
 
 /**
  * Manages a list of conversions, AKA a recipe or conversion set
@@ -90,6 +95,9 @@ public class ConversionsActivity extends KeepScreenOnActivity
         switch (item.getItemId()) {
             case R.id.menu_item_edit:
                 showEditDialog();
+                return true;
+            case R.id.menu_item_share:
+                share();
                 return true;
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
@@ -200,5 +208,49 @@ public class ConversionsActivity extends KeepScreenOnActivity
         NewConversionDialog dialog = new NewConversionDialog();
         dialog.setArguments(args);
         dialog.show(getSupportFragmentManager(), NEW_CONVERSION_DIALOG_TAG);
+    }
+
+    private void share() {
+        String subject = getTitle().toString();
+        StringBuilder body = new StringBuilder();
+
+        body.append("Recipe: " + getTitle().toString() + "\n\n");
+        body.append("Ingredients:\n");
+        int count = conversionsList.getAdapter().getCount();
+        for (int i = 0; i < count; i++) {
+            Cursor cursor = (Cursor)conversionsList.getAdapter().getItem(i);
+
+            double toVal = cursor.getDouble(cursor.getColumnIndex("toValue"));
+            double fromVal = cursor.getDouble(cursor.getColumnIndex("fromValue"));
+            String fromUnit = Utility.getUnitString(cursor.getString(cursor.getColumnIndex("fromUnit")));
+            String toUnit = Utility.getUnitString(cursor.getString(cursor.getColumnIndex("toUnit")));
+            String ingredient = Utility.getIngredientString(cursor.getString(cursor.getColumnIndex("ingredient")));
+
+            body.append(" - ")
+                    .append(Utility.getMeasurementString(fromVal, fromUnit))
+                    .append(" ")
+                    .append(ingredient);
+
+            if (!TextUtils.isEmpty(toUnit) && toVal > 0.01) {
+                body.append(" (")
+                        .append(Utility.getMeasurementString(toVal, toUnit))
+                        .append(")");
+            }
+
+            body.append("\n");
+        }
+
+        body.append("\n")
+        .append("Notes/Directions:\n")
+                .append(notesView.getText().toString())
+                .append("\n");
+
+        ShareCompat.IntentBuilder
+                .from(this)
+                .setText(body.toString())
+                .setSubject(subject)
+                .setType("text/plain")
+                .setChooserTitle("Share via")
+                .startChooser();
     }
 }
