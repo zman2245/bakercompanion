@@ -47,14 +47,6 @@ public class EditRecipeDialog extends DialogFragment {
                     String newName = name.getText().toString();
                     String newNotes = notes.getText().toString();
 
-                    if (TextUtils.isEmpty(newName)) {
-                        newName = "Untitled Recipe";
-                    }
-
-                    if (TextUtils.isEmpty(newNotes)) {
-                        newNotes = "";
-                    }
-
                     ContentValues setValues =
                             BroChefDbHelper.getValsForConversionSetInsert(newName, newNotes);
 

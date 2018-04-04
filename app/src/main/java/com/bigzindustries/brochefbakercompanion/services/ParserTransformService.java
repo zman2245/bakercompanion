@@ -87,18 +87,32 @@ public class ParserTransformService {
 
         List<IngredientResults> ingredientResults = results.getIngredients();
         for (IngredientResults ingredientResult : ingredientResults) {
+            Conv conv;
+            String fromUnitName = "";
             Ingredients ingredient = iMapper.get(ingredientResult.getIngredient());
-            Units fromUnit = uMapper.get(ingredientResult.getUnit());
-            double fromValue = ingredientResult.getAmount();
-            Conv conv = getVolUnit(ingredient, fromUnit, fromValue);
+            if (ingredient == null) {
+                // this particular ingredient couldn't be parsed
+                continue;
+            }
 
+            double fromValue = ingredientResult.getAmount();
+
+            if (ingredientResult.getUnit() == RecipeUnits.GENERIC_UNIT) {
+                // there's no conversion in this case because the unit is just a numerical count
+                // (e.g. 2 eggs)
+                conv = new Conv("", 0.0);
+            } else {
+                Units fromUnit = uMapper.get(ingredientResult.getUnit());
+                fromUnitName = fromUnit.getName();
+                conv = getVolUnit(ingredient, fromUnit, fromValue, rule);
+            }
 
             ContentValues values = BroChefDbHelper.getValsForConversionInsert(
                     newSetId,
                     fromValue,
                     conv.value,
-                    fromUnit.getName(),
-                    conv.unit.getName(),
+                    fromUnitName,
+                    conv.unit,
                     ingredient.getName());
 
             resolver.insert(BroChefContentProvider.CONVERSIONS_URI, values);
@@ -114,30 +128,38 @@ public class ParserTransformService {
      * @param fromVal
      * @return
      */
-    private Conv getVolUnit(Ingredients ingredient, Units fromUnit, double fromVal) {
+    private Conv getVolUnit(Ingredients ingredient, Units fromUnit,
+                            double fromVal, CONVERSION_RULE rule) {
+        if  (rule == CONVERSION_RULE.NONE) {
+            return new Conv("", 0.0);
+        }
+
         double roundingThreshold = 0.10;
         double threshold = 3 + roundingThreshold;
 
-        Units[] unitsToTry = new Units[] {Units.TEASPOONS, Units.TABLESPOONS, Units.CUPS};
+        Units[] massUnitsToTry = new Units[] {Units.GRAMS};
+        Units[] volumeUnitsToTry = new Units[] {Units.TEASPOONS, Units.TABLESPOONS, Units.CUPS};
+        Units[] unitsToTry = (rule == CONVERSION_RULE.TO_MASS) ? massUnitsToTry : volumeUnitsToTry;
+
         Units toUnit = unitsToTry[0];
         double toValue = 0;
 
         for (int i = 0; i < unitsToTry.length; toUnit = unitsToTry[i++]) {
-            double toVal = Conversions.convert(ingredient, fromUnit, toUnit, fromVal);
+            toValue = Conversions.convert(ingredient, fromUnit, toUnit, fromVal);
 
-            if (toVal < threshold) {
+            if (toValue < threshold) {
                 break;
             }
         }
 
-        return new Conv(toUnit, toValue);
+        return new Conv(toUnit.getName(), toValue);
     }
 
     private static class Conv {
-        Units unit;
+        String unit;
         double value;
 
-        public Conv(Units unit, double value) {
+        public Conv(String unit, double value) {
             this.unit = unit;
             this.value = value;
         }

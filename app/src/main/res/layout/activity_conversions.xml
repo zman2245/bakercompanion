@@ -11,7 +11,9 @@
         android:layout_height="90dp"
         android:padding="10dp"
         android:hint="Tap the edit button to add notes to your recipe"
-        android:textColor="#161616"/>
+        android:textColor="#161616"
+        android:scrollbars="vertical"
+        />
     <View
         android:id="@+id/notes_divider"
         android:layout_width="match_parent"

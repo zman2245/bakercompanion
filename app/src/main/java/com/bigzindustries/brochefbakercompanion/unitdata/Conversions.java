@@ -23,7 +23,7 @@ public class Conversions {
                                 Units unitTo,
                                 double value) {
 
-        double inCommonUnits = value * unitFrom.toCommonFactor;;
+        double inCommonUnits = value * unitFrom.toCommonFactor;
 
         if (unitFrom.isMass && !unitTo.isMass) {
             // Mass -> Volume

@@ -1,5 +1,6 @@
 package com.bigzindustries.brochefbakercompanion.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NavUtils;
@@ -8,15 +9,20 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.RadioButton;
 
 import com.bigzindustries.brochefbakercompanion.R;
 import com.bigzindustries.brochefbakercompanion.recipeparser.Parser;
 import com.bigzindustries.brochefbakercompanion.recipeparser.models.RecipeResults;
+import com.bigzindustries.brochefbakercompanion.services.ParserTransformService;
 
 public class ParserActivity extends AppCompatActivity {
 
-    EditText input;
+    EditText ingredientsInput, directionsInput, nameIput;
+    RadioButton radioMass, radioVolume, radioNone;
+
     Parser parser = new Parser();
+    ParserTransformService service = new ParserTransformService();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -24,7 +30,13 @@ public class ParserActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_paste_in);
 
-        input = (EditText)findViewById(R.id.recipeIn);
+        ingredientsInput = (EditText)findViewById(R.id.ingredientsInput);
+        directionsInput = (EditText)findViewById(R.id.directionsInput);
+        nameIput = (EditText)findViewById(R.id.nameIput);
+
+        radioMass = (RadioButton) findViewById(R.id.conversionGroupMass);
+        radioVolume = (RadioButton) findViewById(R.id.conversionGroupVolume);
+        radioNone = (RadioButton) findViewById(R.id.conversionGroupNone);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
@@ -55,14 +67,39 @@ public class ParserActivity extends AppCompatActivity {
     }
 
     private void parseRecipe() {
-        String inputString = input.getText().toString();
+        // collect inputs
+        String name = nameIput.getText().toString();
+        String notes = directionsInput.getText().toString();
+        String inputString = ingredientsInput.getText().toString();
 
+        // parse the ingredients
         RecipeResults results = parser.parse(inputString);
 
-        transformRecipeResults(results);
+        // create the new recipe in DB
+        long newRecipeId = service.createNewRecipeFromParserResults(
+                getContentResolver(),
+                results,
+                name,
+                notes,
+                getRuleFromRadioGroup());
+
+        // start activity for the new recipe
+        Intent intent = new Intent(this, ConversionsActivity.class);
+        intent.putExtra(ConversionsActivity.PARAM_CONV_SET_ID, newRecipeId);
+        intent.putExtra(ConversionsActivity.PARAM_CONV_SET_NAME, name);
+        intent.putExtra(ConversionsActivity.PARAM_CONV_SET_NOTES, notes);
+        startActivity(intent);
     }
 
-    private void transformRecipeResults(RecipeResults recipeResults) {
+    private ParserTransformService.CONVERSION_RULE getRuleFromRadioGroup() {
+        if (radioNone.isChecked()) {
+            return ParserTransformService.CONVERSION_RULE.NONE;
+        }
 
+        if (radioVolume.isChecked()) {
+            return ParserTransformService.CONVERSION_RULE.TO_VOLUME;
+        }
+
+        return ParserTransformService.CONVERSION_RULE.TO_MASS;
     }
 }

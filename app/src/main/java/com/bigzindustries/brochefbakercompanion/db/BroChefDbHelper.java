@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.text.TextUtils;
 
 public class BroChefDbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
@@ -82,6 +83,13 @@ public class BroChefDbHelper extends SQLiteOpenHelper {
     }
 
     public static ContentValues getValsForConversionSetInsert(String name, String notes) {
+        if (TextUtils.isEmpty(name)) {
+            name = "Untitled Recipe";
+        }
+        if (TextUtils.isEmpty(notes)) {
+            notes = "";
+        }
+
         ContentValues values = new ContentValues();
 
         values.put("name", name);

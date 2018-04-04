@@ -1,55 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="10dp"
-    tools:context="com.bigzindustries.brochefbakercompanion.activities.MainActivity">
+    tools:context="com.bigzindustries.brochefbakercompanion.activities.ParserActivity">
 
-    <!-- TODO: create a little helper bubble to give more info on this feature -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#f00"
-        android:text="Paste in the line-by-line ingredients below, and choose a conversion method."/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp"
+        tools:context="com.bigzindustries.brochefbakercompanion.activities.MainActivity">
 
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
-
-        <RadioButton
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Volume (cups, tsp, etc.)"/>
-        <RadioButton
-            android:layout_width="wrap_content"
+            android:text="Name of recipe"/>
+
+        <EditText
+            style="@style/ParserEditTextStyle"
+            android:id="@+id/nameIput"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Legendary Chocolate Chip Cookies"/>
+
+        <!-- TODO: create a little helper bubble to give more info on this feature -->
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Mass (grams)"/>
-        <RadioButton
-            android:layout_width="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Paste in the line-by-line ingredients below, and choose a conversion method."/>
+
+        <RadioGroup
+            android:id="@+id/conversionGroup"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="None"/>
+            android:orientation="horizontal"
+            android:gravity="center">
 
-    </RadioGroup>
+            <RadioButton
+                android:id="@+id/conversionGroupMass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mass (grams)"
+                android:checked="true"/>
+            <RadioButton
+                android:id="@+id/conversionGroupVolume"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Volume (cups, tsp, etc.)" />
+            <RadioButton
+                android:id="@+id/conversionGroupNone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="None"/>
 
-    <EditText
-        android:id="@+id/ingredientsInput"
-        android:layout_height="500dp"
-        android:layout_width="match_parent"
-        />
+        </RadioGroup>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Paste in the directions below. They will become the Notes for your recipe."/>
+        <EditText
+            style="@style/ParserEditTextStyle"
+            android:id="@+id/ingredientsInput"
+            android:layout_height="200dp"
+            android:layout_width="match_parent"
+            />
 
-    <EditText
-        android:id="@+id/directionsInput"
-        android:layout_height="300dp"
-        android:layout_width="match_parent"
-        />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Paste in the directions below. They will become the Notes for your recipe."/>
 
-</LinearLayout>
+        <EditText
+            style="@style/ParserEditTextStyle"
+            android:id="@+id/directionsInput"
+            android:layout_height="200dp"
+            android:layout_width="match_parent"
+            />
+
+    </LinearLayout>
+
+</ScrollView>
