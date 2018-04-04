@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Paste in the line-by-line ingredients below, and choose a conversion method."/>
+            android:text="Paste in the line-by-line ingredients below, and pick how you want measures converted."/>
 
         <RadioGroup
             android:id="@+id/conversionGroup"
@@ -48,7 +48,7 @@
                 android:id="@+id/conversionGroupVolume"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Volume (cups, tsp, etc.)" />
+                android:text="Volume (cups, tsp)" />
             <RadioButton
                 android:id="@+id/conversionGroupNone"
                 android:layout_width="wrap_content"

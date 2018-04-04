@@ -2,6 +2,7 @@ package com.bigzindustries.brochefbakercompanion.dialogs;
 
 import android.app.Dialog;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import android.widget.EditText;
 
 import com.bigzindustries.brochefbakercompanion.R;
 import com.bigzindustries.brochefbakercompanion.activities.ConversionsActivity;
+import com.bigzindustries.brochefbakercompanion.activities.ParserActivity;
 import com.bigzindustries.brochefbakercompanion.db.BroChefContentProvider;
 import com.bigzindustries.brochefbakercompanion.db.BroChefDbHelper;
 
@@ -73,6 +75,14 @@ public class EditRecipeDialog extends DialogFragment {
                         ((EditRecipeDialogFinished)getActivity()).onCanceledNewEntry();
                     }
                 });
+
+        if (isNewRecipe) {
+            builder.setNeutralButton("Paste In Recipe", (dialog, id) -> {
+                dismiss();
+                ((EditRecipeDialogFinished)getActivity()).onCanceledNewEntry();
+                startActivity(new Intent(getActivity(), ParserActivity.class));
+            });
+        }
 
         // Create the AlertDialog object and return it
         return builder.create();

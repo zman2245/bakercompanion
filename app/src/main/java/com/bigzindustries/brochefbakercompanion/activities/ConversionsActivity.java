@@ -121,6 +121,8 @@ public class ConversionsActivity extends KeepScreenOnActivity
 
     }
 
+    // EditRecipeDialogFinished
+
     @Override
     public void onRecipeChanged(boolean isNewDbEntry, long newSetId,
                                 String newName, String newNotes) {
@@ -140,6 +142,8 @@ public class ConversionsActivity extends KeepScreenOnActivity
         // the user decided not to create a new recipe after all
         finish();
     }
+
+    // Context menu
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
