@@ -41,7 +41,7 @@
             android:parentActivityName="com.bigzindustries.brochefbakercompanion.activities.MainActivity">
         </activity>
 
-        <activity android:name=".activities.PasteInActivity"
+        <activity android:name=".activities.ParserActivity"
             android:label="Parse a Recipe"
             android:parentActivityName="com.bigzindustries.brochefbakercompanion.activities.RecipesActivity">
         </activity>

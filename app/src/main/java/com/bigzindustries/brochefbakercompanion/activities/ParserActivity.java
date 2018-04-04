@@ -13,7 +13,7 @@ import com.bigzindustries.brochefbakercompanion.R;
 import com.bigzindustries.brochefbakercompanion.recipeparser.Parser;
 import com.bigzindustries.brochefbakercompanion.recipeparser.models.RecipeResults;
 
-public class PasteInActivity extends AppCompatActivity {
+public class ParserActivity extends AppCompatActivity {
 
     EditText input;
     Parser parser = new Parser();

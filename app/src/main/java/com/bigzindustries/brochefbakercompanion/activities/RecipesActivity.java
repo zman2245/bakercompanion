@@ -73,7 +73,7 @@ public class RecipesActivity extends KeepScreenOnActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_item_paste_recipe:
-                startActivity(new Intent(this, PasteInActivity.class));
+                startActivity(new Intent(this, ParserActivity.class));
                 break;
 
             case android.R.id.home:
