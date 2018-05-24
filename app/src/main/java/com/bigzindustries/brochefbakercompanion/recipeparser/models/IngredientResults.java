@@ -9,6 +9,7 @@ public class IngredientResults {
     String alternateUnit;
 
     String originalLine;
+    int humanReadableIngredientNumber;
 
     public RecipeIngredients getIngredient() {
         return ingredient;
@@ -64,5 +65,13 @@ public class IngredientResults {
 
     public void setOriginalLine(String originalLine) {
         this.originalLine = originalLine;
+    }
+
+    public int getHumanReadableIngredientNumber() {
+        return humanReadableIngredientNumber;
+    }
+
+    public void setHumanReadableIngredientNumber(int humanReadableIngredientNumber) {
+        this.humanReadableIngredientNumber = humanReadableIngredientNumber;
     }
 }

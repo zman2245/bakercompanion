@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.net.Uri;
 
+import com.bigzindustries.brochefbakercompanion.FlurryEvents;
 import com.bigzindustries.brochefbakercompanion.db.BroChefContentProvider;
 import com.bigzindustries.brochefbakercompanion.db.BroChefDbHelper;
 import com.bigzindustries.brochefbakercompanion.recipeparser.models.IngredientResults;
@@ -92,6 +93,7 @@ public class ParserTransformService {
             Ingredients ingredient = iMapper.get(ingredientResult.getIngredient());
             if (ingredient == null) {
                 // this particular ingredient couldn't be parsed
+                FlurryEvents.logIngredientParseError(ingredientResult);
                 continue;
             }
 

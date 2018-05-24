@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.bigzindustries.brochefbakercompanion.FlurryEvents;
 import com.bigzindustries.brochefbakercompanion.R;
 import com.bigzindustries.brochefbakercompanion.db.BroChefContentProvider;
 import com.bigzindustries.brochefbakercompanion.db.BroChefDbHelper;
@@ -191,6 +192,8 @@ public class ConversionController implements AdapterView.OnItemSelectedListener 
         toVal.setText(String.format("%.2f", conversionValue));
 
         addAllChangeListeners();
+
+        FlurryEvents.logConversion(ingredientStr, fromUnitStr, toUnitStr, conversionValue);
     }
 
     // Java 8 stream API only works on API levels >= 24 :(

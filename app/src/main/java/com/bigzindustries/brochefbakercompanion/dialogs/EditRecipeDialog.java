@@ -8,17 +8,18 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.bigzindustries.brochefbakercompanion.FlurryEvents;
 import com.bigzindustries.brochefbakercompanion.R;
 import com.bigzindustries.brochefbakercompanion.activities.ConversionsActivity;
 import com.bigzindustries.brochefbakercompanion.activities.ParserActivity;
 import com.bigzindustries.brochefbakercompanion.db.BroChefContentProvider;
 import com.bigzindustries.brochefbakercompanion.db.BroChefDbHelper;
+import com.flurry.android.FlurryAgent;
 
 public class EditRecipeDialog extends DialogFragment {
 
@@ -81,6 +82,8 @@ public class EditRecipeDialog extends DialogFragment {
                 dismiss();
                 ((EditRecipeDialogFinished)getActivity()).onCanceledNewEntry();
                 startActivity(new Intent(getActivity(), ParserActivity.class));
+
+                FlurryEvents.logPasteInRecipeEntered(FlurryEvents.APP_LOCATION_EDIT_RECIPE_DIALOG);
             });
         }
 

@@ -5,7 +5,9 @@ import android.support.annotation.Nullable;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+import com.bigzindustries.brochefbakercompanion.FlurryEvents;
 import com.bigzindustries.brochefbakercompanion.R;
+import com.flurry.android.FlurryAgent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -42,5 +44,7 @@ public class ProTipsActivity extends KeepScreenOnActivity {
 
         list = (ListView)findViewById(R.id.list);
         list.setAdapter(adapter);
+
+        FlurryAgent.logEvent(FlurryEvents.PRO_TIPS_VIEWED);
     }
 }

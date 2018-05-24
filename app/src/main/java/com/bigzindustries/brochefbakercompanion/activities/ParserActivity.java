@@ -11,10 +11,12 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
+import com.bigzindustries.brochefbakercompanion.FlurryEvents;
 import com.bigzindustries.brochefbakercompanion.R;
 import com.bigzindustries.brochefbakercompanion.recipeparser.Parser;
 import com.bigzindustries.brochefbakercompanion.recipeparser.models.RecipeResults;
 import com.bigzindustries.brochefbakercompanion.services.ParserTransformService;
+import com.flurry.android.FlurryAgent;
 
 public class ParserActivity extends AppCompatActivity {
 
@@ -55,7 +57,8 @@ public class ParserActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_item_save:
-                parseRecipe();;
+                FlurryAgent.logEvent(FlurryEvents.SAVE_PASTE_IN_RECIPE_TAPPED);
+                parseRecipe();
                 break;
 
             case android.R.id.home:
@@ -67,6 +70,7 @@ public class ParserActivity extends AppCompatActivity {
     }
 
     private void parseRecipe() {
+
         // collect inputs
         String name = nameIput.getText().toString();
         String notes = directionsInput.getText().toString();
@@ -89,6 +93,8 @@ public class ParserActivity extends AppCompatActivity {
         intent.putExtra(ConversionsActivity.PARAM_CONV_SET_NAME, name);
         intent.putExtra(ConversionsActivity.PARAM_CONV_SET_NOTES, notes);
         startActivity(intent);
+
+        FlurryEvents.logPasteInRecipeCompleted(inputString, name, notes);
     }
 
     private ParserTransformService.CONVERSION_RULE getRuleFromRadioGroup() {

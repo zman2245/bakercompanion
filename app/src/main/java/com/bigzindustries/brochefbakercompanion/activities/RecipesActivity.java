@@ -17,10 +17,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.bigzindustries.brochefbakercompanion.FlurryEvents;
 import com.bigzindustries.brochefbakercompanion.R;
 import com.bigzindustries.brochefbakercompanion.adapters.ConversionSetsAdapter;
 import com.bigzindustries.brochefbakercompanion.db.BroChefContentProvider;
 import com.bigzindustries.brochefbakercompanion.db.BroChefDbHelper;
+import com.flurry.android.FlurryAgent;
 
 /**
  * Displays and allows management of conversion sets
@@ -52,6 +54,8 @@ public class RecipesActivity extends KeepScreenOnActivity
         getSupportLoaderManager().initLoader(1, null, this);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        FlurryAgent.logEvent(FlurryEvents.RECIPE_LIST_VIEWED);
     }
 
     @Override
@@ -73,6 +77,7 @@ public class RecipesActivity extends KeepScreenOnActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_item_paste_recipe:
+                FlurryEvents.logPasteInRecipeEntered(FlurryEvents.APP_LOCATION_RECIPE_LIST_MENU);
                 startActivity(new Intent(this, ParserActivity.class));
                 break;
 
@@ -145,5 +150,7 @@ public class RecipesActivity extends KeepScreenOnActivity
     private void handleAddButtonClick() {
         Intent intent = new Intent(this, ConversionsActivity.class);
         startActivity(intent);
+
+        FlurryAgent.logEvent(FlurryEvents.ADD_RECIPE_TAPPED);
     }
 }

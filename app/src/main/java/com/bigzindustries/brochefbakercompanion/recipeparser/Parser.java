@@ -31,15 +31,22 @@ public class Parser {
         IngredientResults ingredient;
         String subheading = null;
         List<IngredientResults> ingredients = new ArrayList<>();
+        int humanReadableLineNumber = 0;
 
         for (String line : lines) {
-            ingredient = new IngredientResults();
+
+            // check to see if this line is just a sub heading of the ingredient list
             String newSubheading = checkParseSubheading(line);
             if (newSubheading != null) {
                 // this line is just a sub-heading, track it and continue to next line
                 subheading = newSubheading;
                 continue;
             }
+
+            ingredient = new IngredientResults();
+
+            humanReadableLineNumber++;
+            ingredient.setHumanReadableIngredientNumber(humanReadableLineNumber);
 
             if (subheading != null) {
                 ingredient.setNotes("(" + subheading + ")");
